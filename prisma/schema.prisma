@@ -1,0 +1,345 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  CUSTOMER
+  MERCHANT
+  ADMIN
+}
+
+enum OrderStatus {
+  CREATED
+  PENDING_PAYMENT
+  PAID
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+  REFUNDED
+  FAILED
+}
+
+enum PaymentStatus {
+  CREATED
+  AUTHORIZED
+  CAPTURED
+  FAILED
+  REFUNDED
+}
+
+enum CampaignStatus {
+  DRAFT
+  ACTIVE
+  PAUSED
+  COMPLETED
+}
+
+model User {
+  id            String         @id @default(uuid())
+  email         String         @unique
+  password      String
+  name          String
+  role          Role           @default(CUSTOMER)
+  companyName   String?
+  avatar        String?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  merchant      Merchant?      @relation(fields: [merchantId], references: [id])
+  merchantId    String?
+  carts         Cart[]
+  orders        Order[]
+  agentSessions AgentSession[]
+  auditLogs     AuditLog[]
+  notifications Notification[]
+  refreshTokens RefreshToken[]
+}
+
+model Merchant {
+  id              String           @id @default(uuid())
+  name            String
+  slug            String           @unique
+  logo            String?
+  description     String?
+  apiKey          String?          @unique
+  webhookUrl      String?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  users           User[]
+  products        Product[]
+  orders          Order[]
+  campaigns       Campaign[]
+  analyticsEvents AnalyticsEvent[]
+  notifications   Notification[]
+}
+
+model Category {
+  id          String    @id @default(uuid())
+  name        String
+  slug        String    @unique
+  description String?
+  image       String?
+  createdAt   DateTime  @default(now())
+  products    Product[]
+}
+
+model Product {
+  id                String           @id @default(uuid())
+  sku               String           @unique
+  name              String
+  slug              String           @unique
+  description       String
+  shortDescription  String?
+  brand             String
+  categoryId        String
+  category          Category         @relation(fields: [categoryId], references: [id])
+  subcategory       String?
+  price             Float
+  compareAtPrice    Float?
+  currency          String           @default("INR")
+  inventory         Int              @default(100)
+  availability      Boolean          @default(true)
+  rating            Float            @default(4.8)
+  reviewCount       Int              @default(120)
+  images            String           // JSON string array of URLs
+  features          String           // JSON string array of key features
+  specifications    String           // JSON string of key-value specs
+  tags              String           // JSON string array of tags
+  aiMetadata        String?          // JSON metadata for vector/agent search
+  relatedProducts   String?          // JSON array of product IDs
+  crossSellProducts String?          // JSON array of product IDs
+  upSellProducts    String?          // JSON array of product IDs
+  merchantId        String?
+  merchant          Merchant?        @relation(fields: [merchantId], references: [id])
+  cartItems         CartItem[]
+  orderItems        OrderItem[]
+  recommendations   Recommendation[]
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+}
+
+model Cart {
+  id         String     @id @default(uuid())
+  userId     String?
+  user       User?      @relation(fields: [userId], references: [id])
+  sessionId  String     @unique
+  subtotal   Float      @default(0)
+  discount   Float      @default(0)
+  tax        Float      @default(0)
+  shipping   Float      @default(0)
+  total      Float      @default(0)
+  couponCode String?
+  status     String     @default("ACTIVE")
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  items      CartItem[]
+  orders     Order[]
+}
+
+model CartItem {
+  id         String   @id @default(uuid())
+  cartId     String
+  cart       Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  productId  String
+  product    Product  @relation(fields: [productId], references: [id])
+  quantity   Int      @default(1)
+  unitPrice  Float
+  totalPrice Float
+  createdAt  DateTime @default(now())
+}
+
+model Order {
+  id              String        @id @default(uuid())
+  orderNumber     String        @unique
+  userId          String?
+  user            User?         @relation(fields: [userId], references: [id])
+  merchantId      String?
+  merchant        Merchant?     @relation(fields: [merchantId], references: [id])
+  cartId          String?
+  cart            Cart?         @relation(fields: [cartId], references: [id])
+  subtotal        Float
+  discount        Float         @default(0)
+  tax             Float         @default(0)
+  shipping        Float         @default(0)
+  total           Float
+  currency        String        @default("INR")
+  status          OrderStatus   @default(CREATED)
+  paymentMethod   String?
+  idempotencyKey  String?       @unique
+  shippingAddress String?       // JSON string
+  items           OrderItem[]
+  payments        Payment[]
+  transactions    Transaction[]
+  auditLogs       AuditLog[]
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+}
+
+model OrderItem {
+  id          String   @id @default(uuid())
+  orderId     String
+  order       Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId   String
+  product     Product  @relation(fields: [productId], references: [id])
+  productName String
+  quantity    Int
+  unitPrice   Float
+  totalPrice  Float
+  metadata    String?  // JSON string
+}
+
+model Payment {
+  id                String        @id @default(uuid())
+  orderId           String
+  order             Order         @relation(fields: [orderId], references: [id])
+  paymentId         String?       @unique
+  razorpayOrderId   String?       @unique
+  razorpayPaymentId String?
+  razorpaySignature String?
+  amount            Float
+  currency          String        @default("INR")
+  status            PaymentStatus @default(CREATED)
+  method            String?
+  failureReason     String?
+  metadata          String?       // JSON string
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+}
+
+model Transaction {
+  id        String   @id @default(uuid())
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id])
+  type      String   // AUTHORIZATION, CAPTURE, REFUND, VOID
+  amount    Float
+  status    String   // SUCCESS, FAILED, PENDING
+  metadata  String?  // JSON string
+  createdAt DateTime @default(now())
+}
+
+model AgentSession {
+  id        String         @id @default(uuid())
+  userId    String?
+  user      User?          @relation(fields: [userId], references: [id])
+  title     String         @default("Commerce Copilot Session")
+  status    String         @default("ACTIVE")
+  metadata  String?        // JSON string
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+  messages  AgentMessage[]
+}
+
+model AgentMessage {
+  id         String       @id @default(uuid())
+  sessionId  String
+  session    AgentSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  role       String       // "user", "assistant", "system", "tool"
+  content    String
+  thoughts   String?      // Tool call summary or explanation
+  toolCallId String?
+  metadata   String?      // JSON string (e.g. tool badges, actions)
+  createdAt  DateTime     @default(now())
+}
+
+model Recommendation {
+  id        String   @id @default(uuid())
+  productId String
+  product   Product  @relation(fields: [productId], references: [id])
+  userId    String?
+  type      String   // CROSS_SELL, UP_SELL, AI_DISCOVERY, BUNDLE
+  score     Float    @default(0.95)
+  reason    String
+  converted Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model Campaign {
+  id             String         @id @default(uuid())
+  merchantId     String
+  merchant       Merchant       @relation(fields: [merchantId], references: [id])
+  title          String
+  goal           String
+  targetAudience String
+  budget         Float
+  status         CampaignStatus @default(DRAFT)
+  strategy       String         // JSON strategy generated by AI
+  schedule       String?        // JSON timeline
+  metrics        String?        // JSON performance metrics
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+}
+
+model AuditLog {
+  id               String   @id @default(uuid())
+  auditId          String   @unique
+  timestamp        DateTime @default(now())
+  userId           String?
+  user             User?    @relation(fields: [userId], references: [id])
+  agentId          String?
+  sessionId        String?
+  orderId          String?
+  order            Order?   @relation(fields: [orderId], references: [id])
+  action           String
+  tool             String?
+  inputSummary     String?
+  outputSummary    String?
+  status           String   // SUCCESS, FAILED, REJECTED, REQUIRES_APPROVAL
+  amount           Float?
+  approvalRequired Boolean  @default(false)
+  approvalStatus   String?  // APPROVED, REJECTED, PENDING
+  failureReason    String?
+  ipHash           String?
+  metadata         String?  // JSON string
+}
+
+model Notification {
+  id         String   @id @default(uuid())
+  userId     String?
+  user       User?    @relation(fields: [userId], references: [id])
+  merchantId String?
+  merchant   Merchant? @relation(fields: [merchantId], references: [id])
+  type       String   // ORDER_PAID, INVENTORY_LOW, AI_CONVERSION, CAMPAIGN_ACTIVE, SECURITY_ALERT
+  title      String
+  message    String
+  read       Boolean  @default(false)
+  metadata   String?
+  createdAt  DateTime @default(now())
+}
+
+model AnalyticsEvent {
+  id         String   @id @default(uuid())
+  merchantId String?
+  merchant   Merchant? @relation(fields: [merchantId], references: [id])
+  eventType  String   // PRODUCT_VIEW, SEARCH, AI_QUERY, ADD_TO_CART, CHECKOUT_STARTED, PAYMENT_SUCCESS, etc.
+  eventData  String   // JSON string
+  sessionId  String?
+  userId     String?
+  timestamp  DateTime @default(now())
+}
+
+model WebhookEvent {
+  id          String   @id @default(uuid())
+  eventId     String   @unique
+  eventType   String
+  payload     String   // JSON string
+  signature   String?
+  status      String   // RECEIVED, PROCESSED, FAILED, DUPLICATE_IGNORED
+  attempts    Int      @default(1)
+  error       String?
+  processedAt DateTime?
+  createdAt   DateTime @default(now())
+}
+
+model RefreshToken {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}

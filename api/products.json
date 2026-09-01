@@ -1,0 +1,54 @@
+[
+  {
+    "id": "prod_01",
+    "sku": "RZP-LAP-001",
+    "name": "RazorBook Pro 16\" AI Edition",
+    "brand": "Razorpay Hardware Lab",
+    "categoryId": "cat_laptops",
+    "price": 189999,
+    "inventory": 24,
+    "rating": 4.9,
+    "image": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500&auto=format&fit=crop&q=80",
+    "desc": "16\" AI creator laptop with 36GB RAM and 22hr battery life.",
+    "tags": ["laptop", "ai", "developer"]
+  },
+  {
+    "id": "prod_03",
+    "sku": "RZP-LAP-003",
+    "name": "RazorBook SwiftAir 14\" College Edition",
+    "brand": "Razorpay Hardware Lab",
+    "categoryId": "cat_laptops",
+    "price": 49999,
+    "inventory": 52,
+    "rating": 4.8,
+    "image": "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=500&auto=format&fit=crop&q=80",
+    "desc": "Featherlight 14\" laptop with 16GB RAM and all-day battery.",
+    "tags": ["college laptop", "budget", "student"]
+  },
+  {
+    "id": "prod_05",
+    "sku": "RZP-ACC-001",
+    "name": "AeroGlide Pro Wireless Ergonomic Mouse",
+    "brand": "AeroGlide",
+    "categoryId": "cat_accessories",
+    "price": 2499,
+    "inventory": 140,
+    "rating": 4.8,
+    "image": "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=500&auto=format&fit=crop&q=80",
+    "desc": "Silent wireless mouse with infinite scroll and 90-day battery.",
+    "tags": ["mouse", "wireless"]
+  },
+  {
+    "id": "prod_07",
+    "sku": "RZP-AUD-001",
+    "name": "AcousticPure Flow ANC Wireless Headphones",
+    "brand": "AcousticPure",
+    "categoryId": "cat_audio",
+    "price": 2899,
+    "inventory": 90,
+    "rating": 4.7,
+    "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&auto=format&fit=crop&q=80",
+    "desc": "Hybrid ANC over-ear headphones with 55hr battery and deep bass.",
+    "tags": ["headphones", "anc", "audio"]
+  }
+]

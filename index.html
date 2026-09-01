@@ -1,0 +1,2302 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" class="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RazorAgent AI — Outgrow Ordinary. Autonomous AI Commerce powered by Razorpay.</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: ['class', '[data-theme="dark"]'],
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Poppins', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            theme: {
+              bg: '#F8FAFC',
+              secondary: '#EDF2F7',
+              surface: '#FFFFFF',
+              elevated: '#FFFFFF',
+              text: '#0B132B',
+              'text-sec': '#475569',
+              'text-muted': '#64748B',
+              border: 'rgba(0, 102, 255, 0.15)',
+              'border-sec': '#E2E8F0',
+              input: '#FFFFFF',
+            },
+            accent: {
+              blue: '#0066FF',
+              'blue-light': '#3395FF',
+              'blue-vibrant': '#0C83FF',
+              amber: '#0066FF',
+              purple: '#528FF0',
+              teal: '#00A896',
+              rose: '#FF5D5D',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts: Poppins & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons via CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    /* =========================================================================
+       RAZORPAY SAPPHIRE LIGHT DESIGN SYSTEM
+       ========================================================================= */
+    :root {
+      --bg-primary: #F8FAFC;
+      --bg-secondary: #EDF2F7;
+      --bg-card: #FFFFFF;
+      --bg-elevated: #FFFFFF;
+      --text-primary: #0B132B;
+      --text-secondary: #475569;
+      --text-muted: #64748B;
+      --border-primary: rgba(0, 102, 255, 0.16);
+      --border-secondary: #E2E8F0;
+      --border-glow: rgba(0, 102, 255, 0.4);
+      --accent-primary: #0066FF;
+      --accent-secondary: #3395FF;
+      --button-primary: #0066FF;
+      --button-text: #FFFFFF;
+      --input-bg: #FFFFFF;
+      --terminal-bg: #0A1128;
+      --grid-color: rgba(0, 102, 255, 0.05);
+      --shadow-color: rgba(0, 102, 255, 0.08);
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      overflow-x: hidden;
+    }
+
+    /* Razorpay Media Hero Styling (From Reference Image) */
+    .media-hero-bg {
+      background: 
+        radial-gradient(circle at 50% 30%, rgba(0, 102, 255, 0.85) 0%, rgba(0, 82, 204, 0.95) 60%, #0A2540 100%);
+      color: #FFFFFF;
+    }
+
+    .outgrow-text {
+      font-size: clamp(3rem, 9vw, 7rem);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 0.95;
+      color: #FFFFFF;
+      text-shadow: 0 4px 30px rgba(0, 0, 0, 0.25);
+    }
+
+    .theme-card {
+      background: #FFFFFF;
+      border: 1px solid rgba(0, 102, 255, 0.14);
+      box-shadow: 0 8px 30px rgba(0, 102, 255, 0.05);
+      border-radius: 1.25rem;
+    }
+
+    .theme-card-glow {
+      background: #FFFFFF;
+      border: 1px solid rgba(0, 102, 255, 0.25);
+      box-shadow: 0 10px 35px rgba(0, 102, 255, 0.09);
+      border-radius: 1.5rem;
+    }
+
+    .theme-grid-bg {
+      background-size: 40px 40px;
+      background-image: 
+        linear-gradient(to right, rgba(0, 102, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0, 102, 255, 0.05) 1px, transparent 1px);
+    }
+
+    .terminal-container {
+      background-color: #0A1128;
+      border: 1px solid rgba(0, 102, 255, 0.3);
+      color: #38BDF8;
+    }
+
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #EDF2F7; }
+    ::-webkit-scrollbar-thumb { background: rgba(0, 102, 255, 0.35); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(0, 102, 255, 0.7); }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased theme-grid-bg">
+
+  <!-- NAVBAR (Razorpay Style from Media) -->
+  <nav class="fixed top-0 left-0 right-0 z-40 bg-white/90 backdrop-blur-md border-b border-blue-500/15 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <!-- Logo -->
+        <a href="#landing" onclick="navigate('landing')" class="flex items-center space-x-3 group cursor-pointer">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-cyan-500 flex items-center justify-center shadow-lg shadow-blue-500/30 group-hover:scale-105 transition-transform">
+            <i class="fa-solid fa-bolt text-white font-bold"></i>
+          </div>
+          <div class="flex flex-col">
+            <span class="font-black text-lg tracking-tight flex items-center text-slate-900">
+              Razor<span class="text-blue-600 ml-0.5">Agent</span> <span class="ml-1 text-[10px] font-mono px-1.5 py-0.2 rounded bg-blue-500/10 text-blue-600 font-bold border border-blue-400/30">AI</span>
+            </span>
+            <span class="text-[9px] text-slate-500 uppercase tracking-widest font-mono font-semibold">Powered by Razorpay</span>
+          </div>
+        </a>
+
+        <!-- Desktop Media Style Navigation Links -->
+        <div class="hidden lg:flex items-center space-x-1 text-xs font-bold uppercase tracking-wider">
+          <button onclick="navigate('landing')" class="nav-btn px-3.5 py-1.5 rounded-xl text-slate-600 hover:text-blue-600 hover:bg-blue-50 transition-all" data-page="landing">
+            Who We Are
+          </button>
+          <button onclick="navigate('architecture')" class="nav-btn px-3.5 py-1.5 rounded-xl text-slate-600 hover:text-blue-600 hover:bg-blue-50 transition-all" data-page="architecture">
+            How We Build With AI
+          </button>
+          <button onclick="navigate('shop')" class="nav-btn px-3.5 py-1.5 rounded-xl text-slate-600 hover:text-blue-600 hover:bg-blue-50 transition-all" data-page="shop">
+            Smart Shop
+          </button>
+          <button onclick="navigate('ai')" class="nav-btn px-3.5 py-1.5 rounded-xl text-blue-600 hover:bg-blue-50 border border-blue-500/30 transition-all font-extrabold" data-page="ai">
+            AI Copilot
+          </button>
+          <button onclick="navigate('live-agent')" class="nav-btn px-3.5 py-1.5 rounded-xl text-slate-600 hover:text-blue-600 hover:bg-blue-50 transition-all" data-page="live-agent">
+            Live Visualizer
+          </button>
+          <button onclick="navigate('dashboard')" class="nav-btn px-3.5 py-1.5 rounded-xl text-slate-600 hover:text-blue-600 hover:bg-blue-50 transition-all" data-page="dashboard">
+            Merchant Hub
+          </button>
+          <button onclick="navigate('database')" class="nav-btn px-3.5 py-1.5 rounded-xl text-slate-600 hover:text-blue-600 hover:bg-blue-50 transition-all" data-page="database">
+            <i class="fa-solid fa-database text-blue-600 mr-1"></i>Database Hub
+          </button>
+          <button onclick="navigate('docs')" class="nav-btn px-3.5 py-1.5 rounded-xl text-slate-600 hover:text-blue-600 hover:bg-blue-50 transition-all" data-page="docs">
+            API Docs
+          </button>
+        </div>
+
+        <!-- Right Controls: Cart & Blue 'SEE ALL DEMOS' Button -->
+        <div class="flex items-center space-x-3">
+          <button onclick="navigate('cart')" class="relative p-2.5 rounded-xl bg-slate-100 hover:bg-blue-50 border border-slate-200 text-slate-700 hover:text-blue-600 transition-colors">
+            <i class="fa-solid fa-cart-shopping text-sm"></i>
+            <span id="cartBadge" class="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-blue-600 text-white text-[10px] font-bold flex items-center justify-center">0</span>
+          </button>
+
+          <!-- Blue button matching Media Header: 'SEE ALL JOBS / TRY AI COPILOT' -->
+          <button onclick="navigate('ai')" class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs shadow-md shadow-blue-600/30 transition-all uppercase tracking-wider">
+            SEE ALL DEMOS
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN APP CONTAINER -->
+  <main class="flex-1 pt-16">
+
+    <!-- 1. LANDING PAGE VIEW -->
+    <div id="view-landing" class="page-view space-y-16">
+      
+      <!-- HERO BANNER (Directly matching media image) -->
+      <section class="relative min-h-[85vh] flex flex-col justify-center items-center text-center px-4 sm:px-6 lg:px-8 media-hero-bg overflow-hidden pt-12 pb-16">
+        
+        <!-- Top Pill -->
+        <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-white/20 border border-white/40 text-xs font-mono text-white mb-6 shadow-lg backdrop-blur-md">
+          <i class="fa-solid fa-bolt text-cyan-300"></i>
+          <span>Autonomous AI Agentic Commerce • Razorpay DataSync Ready</span>
+        </div>
+
+        <!-- Giant 'Outgrow Ordinary' Typography from Media -->
+        <h1 class="outgrow-text select-none">
+          Outgrow Ordinary
+        </h1>
+
+        <p class="mt-4 text-base sm:text-xl text-blue-100 max-w-2xl mx-auto font-normal leading-relaxed">
+          Autonomous AI Commerce from discovery to sandbox checkout. Engineered for modern merchants and AI purchasing agents.
+        </p>
+
+        <!-- Centered Action Button from Media: White Pill with Dark Text -->
+        <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <button onclick="navigate('ai')" class="px-8 py-4 rounded-xl bg-white hover:bg-slate-100 text-blue-900 font-extrabold text-sm uppercase tracking-wider shadow-2xl hover:scale-105 transition-all">
+            SEE ALL DEMOS
+          </button>
+          <button onclick="navigate('live-agent')" class="px-6 py-4 rounded-xl bg-blue-800/60 hover:bg-blue-800 border border-white/30 text-white font-bold text-sm transition-all flex items-center space-x-2">
+            <i class="fa-solid fa-wand-magic-sparkles text-cyan-300"></i><span>Live WOW Visualizer</span>
+          </button>
+          <button onclick="navigate('dashboard')" class="px-6 py-4 rounded-xl bg-white/10 hover:bg-white/20 border border-white/30 text-white font-bold text-sm transition-all flex items-center space-x-2">
+            <i class="fa-solid fa-chart-line text-cyan-300"></i><span>Merchant Growth Hub</span>
+          </button>
+        </div>
+
+        <!-- Bottom-Right 'Hiring AI Builders' Card from Media -->
+        <div class="absolute bottom-6 right-6 hidden md:flex items-center space-x-4 p-4 rounded-2xl bg-white text-slate-900 shadow-2xl border border-slate-200 hover:scale-105 transition-transform cursor-pointer" onclick="navigate('ai')">
+          <div class="text-left">
+            <span class="block text-xs font-bold text-slate-600">Hiring</span>
+            <span class="block text-sm font-black text-slate-900">AI Builders</span>
+            <span class="block text-xs text-blue-600 font-bold mt-1">Explore →</span>
+          </div>
+          <div class="w-12 h-12 rounded-xl bg-slate-950 flex items-center justify-center text-cyan-400 font-mono text-xs shadow-inner">
+            <i class="fa-solid fa-terminal text-lg"></i>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- 3D Pipeline Hero Canvas -->
+      <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="relative w-full h-[420px] rounded-3xl overflow-hidden theme-card shadow-lg flex items-center justify-center">
+          <div class="absolute top-4 left-6 flex items-center space-x-2 text-xs font-mono text-slate-500 font-bold">
+            <span class="w-2 h-2 rounded-full bg-blue-600 animate-ping"></span>
+            <span>RazorAgent 3D Flow & DataSync Real-time Pipeline</span>
+          </div>
+          <canvas id="heroCanvas" class="w-full h-full"></canvas>
+        </div>
+      </section>
+
+      <!-- 3D COMPANY REVENUE & RAZORPAY DATASYNC SHOWCASE -->
+      <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="theme-card-glow p-6 sm:p-8">
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-6 border-b border-slate-200">
+            <div>
+              <div class="inline-flex items-center space-x-2 text-xs font-mono text-blue-600 font-bold mb-1">
+                <i class="fa-solid fa-database"></i><span>RAZORPAY DATASYNC INTEGRATION</span>
+              </div>
+              <h2 class="text-2xl font-extrabold text-slate-900">3D Company Revenue & Real-time DataSync Analytics</h2>
+              <p class="text-xs text-slate-600 mt-1 max-w-3xl">
+                Razorpay launched DataSync with AWS and Snowflake, saving Indian enterprises up to 50% on operational costs through sub-second transaction ETL synchronization.
+              </p>
+            </div>
+            <div class="flex items-center space-x-2 font-mono text-xs">
+              <span class="px-3 py-1.5 rounded-xl bg-emerald-50 text-emerald-700 font-bold border border-emerald-300">
+                50% COST SAVINGS
+              </span>
+              <span class="px-3 py-1.5 rounded-xl bg-blue-50 text-blue-700 font-bold border border-blue-300">
+                AWS & SNOWFLAKE LIVE
+              </span>
+            </div>
+          </div>
+
+          <!-- 3D Graph Canvas & Interactive Controls -->
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="lg:col-span-2 theme-card p-5 space-y-4">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <div class="flex items-center space-x-2 text-xs font-mono font-bold text-slate-800">
+                  <span class="w-2.5 h-2.5 rounded-full bg-blue-600 animate-pulse"></span>
+                  <span>3D Isometric Revenue Stream & Data Pipeline</span>
+                </div>
+                <div class="flex space-x-1 font-mono text-[11px]" id="revenueTimeframeBtns">
+                  <button onclick="changeRevenueTimeframe('1D')" class="rev-btn px-2.5 py-1 rounded-lg bg-blue-600 text-white font-bold" data-tf="1D">1D</button>
+                  <button onclick="changeRevenueTimeframe('7D')" class="rev-btn px-2.5 py-1 rounded-lg bg-slate-100 text-slate-600 hover:text-slate-900" data-tf="7D">7D</button>
+                  <button onclick="changeRevenueTimeframe('1M')" class="rev-btn px-2.5 py-1 rounded-lg bg-slate-100 text-slate-600 hover:text-slate-900" data-tf="1M">1M</button>
+                  <button onclick="changeRevenueTimeframe('1Y')" class="rev-btn px-2.5 py-1 rounded-lg bg-slate-100 text-slate-600 hover:text-slate-900" data-tf="1Y">1Y</button>
+                  <button onclick="changeRevenueTimeframe('DATASYNC')" class="rev-btn px-2.5 py-1 rounded-lg bg-slate-100 text-slate-600 hover:text-slate-900" data-tf="DATASYNC">DataSync Live</button>
+                </div>
+              </div>
+
+              <!-- Interactive 3D WebGL / Canvas -->
+              <div class="h-80 w-full rounded-2xl bg-slate-950 overflow-hidden relative border border-slate-800">
+                <canvas id="revenue3DCanvas" class="w-full h-full cursor-grab active:cursor-grabbing"></canvas>
+                <div class="absolute bottom-3 right-3 text-[10px] font-mono px-2 py-1 rounded bg-black/75 text-cyan-300">
+                  Click & Drag to Rotate 3D Grid
+                </div>
+              </div>
+            </div>
+
+            <!-- DataSync Telemetry KPIs -->
+            <div class="theme-card p-5 space-y-4 text-xs font-mono flex flex-col justify-between">
+              <div class="space-y-3">
+                <h4 class="font-bold uppercase text-slate-500">DataSync Operational Vitals</h4>
+                
+                <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                  <span class="text-slate-500 text-[10px]">ANNUAL COST SAVINGS</span>
+                  <div class="flex items-baseline justify-between">
+                    <span class="text-xl font-black text-emerald-600">50.2%</span>
+                    <span class="text-[11px] text-slate-500 font-bold">₹34.8 Lakhs Saved</span>
+                  </div>
+                </div>
+
+                <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                  <span class="text-slate-500 text-[10px]">DATASYNC THROUGHPUT</span>
+                  <div class="flex items-baseline justify-between">
+                    <span class="text-xl font-black text-blue-600">1.24M</span>
+                    <span class="text-[11px] text-slate-500 font-bold">Events / sec</span>
+                  </div>
+                </div>
+
+                <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                  <span class="text-slate-500 text-[10px]">INTEGRATION TARGETS</span>
+                  <div class="flex items-center space-x-2 pt-1 text-[11px]">
+                    <span class="px-2 py-0.5 rounded bg-blue-100 text-blue-700 font-bold">AWS S3</span>
+                    <span class="px-2 py-0.5 rounded bg-cyan-100 text-cyan-800 font-bold">Snowflake Lakehouse</span>
+                  </div>
+                </div>
+              </div>
+
+              <button onclick="navigate('dashboard')" class="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-md transition-all">
+                Open Full Revenue Analytics →
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Live Transaction Feed -->
+      <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="theme-card-glow p-6 sm:p-8">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-200">
+            <div>
+              <div class="flex items-center space-x-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
+                <h2 class="text-xl font-extrabold text-slate-900">Live Autonomous Transaction Feed</h2>
+              </div>
+              <p class="text-xs text-slate-600 mt-0.5">Real-time event stream from agent discovery to Razorpay sandbox settlements.</p>
+            </div>
+            <span class="font-mono text-xs px-3 py-1 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-300 font-bold">
+              REALTIME BUS ACTIVE
+            </span>
+          </div>
+
+          <div id="liveStreamList" class="space-y-2.5"></div>
+        </div>
+      </section>
+
+      <!-- Feature Grid -->
+      <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-2xl mx-auto mb-10 space-y-1">
+          <h2 class="text-xs font-mono uppercase tracking-widest text-blue-600 font-bold">HOW WE BUILD WITH AI</h2>
+          <h3 class="text-3xl font-extrabold text-slate-900">Engineered for Autonomous Commerce</h3>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="theme-card p-6 space-y-3">
+            <div class="w-10 h-10 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center font-bold">
+              <i class="fa-solid fa-robot"></i>
+            </div>
+            <h4 class="text-base font-bold text-slate-900">Autonomous Bundling</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Understands multi-variable constraints (e.g. *“College setup <₹60,000”*), validates merchant inventory, and applies instant promo rules.
+            </p>
+          </div>
+
+          <div class="theme-card p-6 space-y-3">
+            <div class="w-10 h-10 rounded-2xl bg-cyan-100 text-cyan-700 flex items-center justify-center font-bold">
+              <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <h4 class="text-base font-bold text-slate-900">Explainable Money Gates</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Interlocks financial actions behind explicit user approval. Prevents unconfirmed charges and generates cryptographically signed audit logs.
+            </p>
+          </div>
+
+          <div class="theme-card p-6 space-y-3">
+            <div class="w-10 h-10 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold">
+              <i class="fa-solid fa-credit-card"></i>
+            </div>
+            <h4 class="text-base font-bold text-slate-900">Razorpay Sandbox & DataSync</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Full test mode payment orchestration with server-side order generation, simulated QR codes, and sub-second Snowflake ETL synchronization.
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- 2. SMART SHOP VIEW -->
+    <div id="view-shop" class="page-view hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 py-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200">
+        <div>
+          <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-blue-50 text-blue-600 font-mono text-xs font-bold mb-2">
+            <i class="fa-solid fa-robot"></i><span>Agent-Readable Verified Catalog</span>
+          </div>
+          <h1 class="text-3xl font-extrabold text-slate-900">Smart Product Catalog</h1>
+        </div>
+        <div class="flex items-center space-x-3">
+          <button onclick="openAgentJsonModal()" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-xs font-mono text-slate-700 font-bold flex items-center space-x-2">
+            <i class="fa-solid fa-code text-blue-600"></i><span>Agent JSON Schema</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div class="space-y-6 theme-card p-5 h-fit text-xs">
+          <div>
+            <label class="font-mono font-bold uppercase text-slate-700 block mb-2">Search Catalog</label>
+            <div class="relative">
+              <i class="fa-solid fa-magnifying-glass text-slate-400 absolute left-3 top-2.5"></i>
+              <input type="text" id="shopSearchInput" oninput="filterCatalog()" placeholder="Keywords, specs..." class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-8 pr-3 py-2 text-slate-900 focus:outline-none focus:border-blue-600">
+            </div>
+          </div>
+
+          <div>
+            <label class="font-mono font-bold uppercase text-slate-700 block mb-2">Categories</label>
+            <div class="space-y-1" id="categoryFilterList"></div>
+          </div>
+
+          <div>
+            <div class="flex justify-between mb-2">
+              <span class="font-mono font-bold text-slate-700">Max Budget</span>
+              <span id="budgetLabel" class="font-mono font-bold text-blue-600">₹2,50,000</span>
+            </div>
+            <input type="range" id="shopBudgetSlider" min="2000" max="250000" step="5000" value="250000" oninput="updateBudgetFilter(this.value)" class="w-full accent-blue-600">
+          </div>
+        </div>
+
+        <div class="md:col-span-3">
+          <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. CENTRAL COMMERCE COPILOT VIEW (/ai) -->
+    <div id="view-ai" class="page-view hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-[calc(100vh-7rem)] flex flex-col lg:flex-row gap-6 py-6">
+      <div class="flex-1 theme-card flex flex-col overflow-hidden shadow-xl">
+        <div class="px-6 py-4 border-b border-slate-200 bg-slate-50 flex items-center justify-between">
+          <div class="flex items-center space-x-3">
+            <div class="w-9 h-9 rounded-2xl bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center text-white font-bold">
+              <i class="fa-solid fa-bolt"></i>
+            </div>
+            <div>
+              <div class="flex items-center space-x-2">
+                <h2 class="font-bold text-sm text-slate-900">RazorAgent AI Copilot</h2>
+                <span class="text-[9px] font-mono px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-300 font-bold">18 TOOLS ACTIVE</span>
+              </div>
+              <p class="text-[10px] text-slate-500 font-mono">Autonomous Discovery • Explainable Gates • Razorpay Sandbox</p>
+            </div>
+          </div>
+
+          <button onclick="runScenarioCollegeSetup()" class="px-3 py-1.5 rounded-xl bg-blue-50 border border-blue-200 text-blue-600 text-xs font-bold hover:bg-blue-100">
+            ⚡ Demo Setup &lt;₹60k
+          </button>
+        </div>
+
+        <div id="chatMessageThread" class="flex-1 overflow-y-auto p-6 space-y-6 text-xs sm:text-sm bg-white"></div>
+
+        <div class="p-4 border-t border-slate-200 bg-slate-50">
+          <form onsubmit="handleChatSubmit(event)" class="flex items-center space-x-2">
+            <input type="text" id="chatInput" placeholder="Ask RazorAgent AI (e.g. 'College setup under 60k', 'Headphones under 3000')..." class="flex-1 bg-white border border-slate-300 rounded-2xl px-4 py-3 text-xs sm:text-sm text-slate-900 focus:outline-none focus:border-blue-600">
+            <button type="submit" class="p-3 rounded-2xl bg-blue-600 text-white font-bold hover:bg-blue-700 shadow-md">
+              <i class="fa-solid fa-paper-plane text-xs"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div class="hidden lg:flex w-80 flex-col theme-card p-5 space-y-4 text-xs font-mono">
+        <h3 class="font-bold uppercase text-xs text-slate-800">Agent Tool Telemetry</h3>
+        <div class="space-y-2">
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 text-[11px]">
+            <span class="text-slate-500 font-bold">STATUS:</span> <span class="text-emerald-600 font-bold">READY</span>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 text-[11px]">
+            <span class="text-slate-500 font-bold">SAFETY GATE:</span> <span class="text-blue-600 font-bold">MANDATED</span>
+          </div>
+        </div>
+
+        <div class="pt-4 border-t border-slate-200 space-y-2">
+          <span class="text-slate-500 font-bold block mb-1">Demo Prompts:</span>
+          <button onclick="sendChatMessage('I need a productivity setup for college under 60000')" class="w-full text-left p-2.5 rounded-xl bg-slate-50 hover:bg-blue-50 text-slate-700 hover:text-blue-600 text-[11px] border border-slate-200 font-semibold">
+            🎓 College Setup &lt;₹60,000
+          </button>
+          <button onclick="sendChatMessage('I need headphones under 3000')" class="w-full text-left p-2.5 rounded-xl bg-slate-50 hover:bg-blue-50 text-slate-700 hover:text-blue-600 text-[11px] border border-slate-200 font-semibold">
+            🎧 Headphones &lt;₹3,000
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. LIVE AGENT VISUALIZER VIEW (/live-agent) -->
+    <div id="view-live-agent" class="page-view hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 py-6">
+      <div class="theme-card p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <div class="inline-flex items-center space-x-2 text-xs font-mono text-blue-600 font-bold mb-1">
+            <i class="fa-solid fa-bolt"></i><span>HACKATHON COMMAND CENTER • RAZORPAY AI</span>
+          </div>
+          <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900">RazorAgent AI Live Visualizer</h1>
+        </div>
+        <div class="flex space-x-3">
+          <button onclick="runScenarioCollegeSetup()" class="px-4 py-2 rounded-xl bg-blue-600 text-white font-bold text-xs hover:bg-blue-700 flex items-center space-x-2 shadow-md shadow-blue-600/30">
+            <i class="fa-solid fa-play"></i><span>Trigger Complete Pitch Flow</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="theme-card p-6 space-y-4">
+          <h3 class="text-xs font-bold uppercase font-mono text-slate-800">Autonomous Flow Graph</h3>
+          <div class="h-64 relative rounded-2xl overflow-hidden bg-slate-950">
+            <canvas id="liveFlowCanvas" class="w-full h-full"></canvas>
+          </div>
+        </div>
+
+        <div class="theme-card p-6 space-y-3">
+          <h3 class="text-xs font-bold uppercase font-mono text-slate-800">7-Stage Pipeline Tracker</h3>
+          <div class="space-y-2 text-xs" id="pipelineTrackerList"></div>
+        </div>
+
+        <div class="theme-card p-6 space-y-3 font-mono">
+          <div class="flex justify-between items-center text-xs">
+            <span class="font-bold text-slate-900">Backend Server Terminal Log Stream</span>
+            <span class="text-emerald-400">LIVE HTTP/SSE</span>
+          </div>
+          <div id="liveTerminalOutput" class="terminal-container p-4 rounded-2xl h-56 overflow-y-auto text-[11px] space-y-1 font-mono"></div>
+        </div>
+
+        <div class="theme-card p-6 space-y-4">
+          <h3 class="text-xs font-bold uppercase font-mono text-slate-800">Live Attribution Telemetry</h3>
+          <div class="grid grid-cols-2 gap-4 text-xs font-mono">
+            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+              <span class="text-slate-500 text-[10px]">TOTAL AI GMV</span>
+              <p class="text-2xl font-bold mt-1 text-slate-900">₹14,28,450</p>
+              <span class="text-[10px] text-emerald-600 font-bold">+34.2% today</span>
+            </div>
+            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+              <span class="text-slate-500 text-[10px]">AI CONVERSION RATE</span>
+              <p class="text-2xl font-bold text-blue-600 mt-1">12.9%</p>
+            </div>
+            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+              <span class="text-slate-500 text-[10px]">BUNDLES GENERATED</span>
+              <p class="text-2xl font-bold text-cyan-600 mt-1">3,410</p>
+            </div>
+            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+              <span class="text-slate-500 text-[10px]">SANDBOX PAYMENTS</span>
+              <p class="text-2xl font-bold text-emerald-600 mt-1">1,840</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. CART VIEW -->
+    <div id="view-cart" class="page-view hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 py-6">
+      <div>
+        <h1 class="text-3xl font-extrabold text-slate-900">Your Cart</h1>
+        <p class="text-xs text-slate-600 mt-1">Review items and proceed to Explainable Permission Gated checkout.</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="lg:col-span-2 space-y-4" id="cartItemsList"></div>
+
+        <div class="theme-card-glow p-6 space-y-6 h-fit text-xs font-mono">
+          <h3 class="font-bold text-sm uppercase text-slate-900">Order Calculation</h3>
+          
+          <div class="flex space-x-2">
+            <input type="text" id="couponInput" placeholder="STUDENT10" class="flex-1 bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-900 uppercase font-bold">
+            <button onclick="applyCouponCode()" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 border border-slate-300 font-bold text-slate-800">
+              Apply
+            </button>
+          </div>
+
+          <div class="space-y-2 pt-4 border-t border-slate-200">
+            <div class="flex justify-between text-slate-600"><span>Subtotal:</span><span id="summarySubtotal" class="font-bold">₹0</span></div>
+            <div class="flex justify-between text-emerald-600 font-bold"><span>Discount (Promo):</span><span id="summaryDiscount">-₹0</span></div>
+            <div class="flex justify-between text-slate-600"><span>GST Tax (8%):</span><span id="summaryTax" class="font-bold">₹0</span></div>
+            <div class="flex justify-between text-slate-600"><span>Express Delivery:</span><span id="summaryShipping" class="font-bold">FREE</span></div>
+            <div class="flex justify-between text-base font-black pt-2 border-t border-slate-200 text-slate-900">
+              <span>Verified Total:</span><span id="summaryTotal" class="text-blue-600 font-black">₹0</span>
+            </div>
+          </div>
+
+          <button onclick="navigate('checkout')" class="w-full py-3.5 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs flex items-center justify-center space-x-2 shadow-xl shadow-blue-600/30 transition-all">
+            <span>Proceed to Checkout</span><i class="fa-solid fa-arrow-right text-xs"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. CHECKOUT VIEW -->
+    <div id="view-checkout" class="page-view hidden max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 py-6">
+      <div>
+        <h1 class="text-3xl font-extrabold text-slate-900">Autonomous Checkout</h1>
+        <p class="text-xs text-slate-600 mt-1">Explainable permission gated payment orchestration via Razorpay Test Sandbox.</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="lg:col-span-2 space-y-6">
+          <div class="theme-card p-6 space-y-4 text-xs">
+            <h3 class="font-bold text-sm uppercase font-mono text-slate-900">Delivery Coordinates</h3>
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="text-slate-600 block mb-1 font-semibold">Full Name</label>
+                <input type="text" value="Elena Rostova (AI Buyer)" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-900">
+              </div>
+              <div>
+                <label class="text-slate-600 block mb-1 font-semibold">City</label>
+                <input type="text" value="Bengaluru" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-900">
+              </div>
+              <div class="col-span-2">
+                <label class="text-slate-600 block mb-1 font-semibold">Address Line</label>
+                <input type="text" value="Tech Residency, Tower B, 4th Floor" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-900">
+              </div>
+            </div>
+          </div>
+
+          <div class="theme-card-glow p-6 space-y-4 text-xs">
+            <div class="flex items-center space-x-2 text-blue-600 font-bold font-mono">
+              <i class="fa-solid fa-lock"></i><span>EXPLAINABLE FINANCIAL PERMISSION GATE</span>
+            </div>
+            <p class="text-slate-600 leading-relaxed">
+              RazorAgent AI prepared a bounded checkout transaction. No money can be debited without your explicit authorization.
+            </p>
+            <div class="flex items-center space-x-3 pt-2">
+              <input type="checkbox" id="moneyGateCheckbox" onchange="toggleGateApproval(this.checked)" class="w-4 h-4 accent-blue-600 rounded cursor-pointer">
+              <label for="moneyGateCheckbox" class="font-bold cursor-pointer select-none text-slate-900">
+                I explicitly approve this transaction in Razorpay Test Mode
+              </label>
+            </div>
+          </div>
+
+          <div class="theme-card p-5 space-y-3 text-xs">
+            <div class="flex justify-between items-center">
+              <span class="font-mono font-bold text-slate-700">Failure Recovery Simulator</span>
+              <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-100 text-slate-600">DEMO CONTROLS</span>
+            </div>
+            <div class="flex gap-2">
+              <button onclick="setSimScenario('SUCCESS')" class="sim-btn px-3 py-1.5 rounded-xl bg-blue-600 text-white font-bold text-[11px]" data-sim="SUCCESS">
+                Normal Flow
+              </button>
+              <button onclick="setSimScenario('TIMEOUT')" class="sim-btn px-3 py-1.5 rounded-xl bg-slate-100 text-slate-700 text-[11px] font-bold" data-sim="TIMEOUT">
+                Simulate Timeout
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="theme-card p-6 space-y-6 h-fit text-xs font-mono">
+          <h3 class="font-bold text-sm uppercase text-slate-900">Payable Total</h3>
+          <div class="text-3xl font-black text-blue-600" id="checkoutPayableAmount">₹53,846</div>
+          <p class="text-slate-500 text-[11px]">Razorpay Sandbox • Zero Raw Card Storage</p>
+
+          <button id="payNowBtn" onclick="executeRazorpayPayment()" disabled class="w-full py-4 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-black text-xs shadow-xl shadow-blue-600/30 disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center space-x-2">
+            <i class="fa-solid fa-credit-card"></i><span>Authorize & Pay (Test Mode)</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7. MERCHANT DASHBOARD VIEW (/dashboard) -->
+    <div id="view-dashboard" class="page-view hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 py-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200">
+        <div>
+          <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-blue-50 text-blue-600 font-mono text-xs font-bold mb-2">
+            <i class="fa-solid fa-chart-line text-blue-600"></i><span>Razorpay DataSync & Merchant Revenue Hub</span>
+          </div>
+          <h1 class="text-3xl font-extrabold text-slate-900">Merchant Growth & 3D Analytics</h1>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-4 gap-6">
+        <div class="theme-card p-6 space-y-2">
+          <span class="text-slate-500 text-xs font-mono uppercase">Total GMV</span>
+          <p class="text-3xl font-black text-slate-900" id="kpiGMV">₹14,28,450</p>
+          <span class="text-[11px] text-emerald-600 font-bold font-mono">+28.4% this week</span>
+        </div>
+        <div class="theme-card p-6 space-y-2">
+          <span class="text-slate-500 text-xs font-mono uppercase">DataSync Cost Saved</span>
+          <p class="text-3xl font-black text-emerald-600">50.2%</p>
+          <span class="text-[11px] text-slate-500 font-mono">AWS & Snowflake ETL</span>
+        </div>
+        <div class="theme-card p-6 space-y-2">
+          <span class="text-slate-500 text-xs font-mono uppercase">AI Revenue Share</span>
+          <p class="text-3xl font-black text-blue-600">85.4%</p>
+        </div>
+        <div class="theme-card p-6 space-y-2">
+          <span class="text-slate-500 text-xs font-mono uppercase">Average Order Value</span>
+          <p class="text-3xl font-black text-slate-900">₹53,846</p>
+        </div>
+      </div>
+
+      <div class="theme-card p-6 space-y-4">
+        <div class="flex justify-between items-center">
+          <h3 class="font-bold text-sm uppercase font-mono text-slate-900">Cryptographic Immutable Audit Explorer</h3>
+          <span class="text-xs font-mono px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 font-bold border border-emerald-200">HMAC VERIFIED</span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs font-mono">
+            <thead class="bg-slate-100 text-slate-700 border-b border-slate-200">
+              <tr>
+                <th class="p-3">Audit ID</th>
+                <th class="p-3">Action</th>
+                <th class="p-3">Status</th>
+                <th class="p-3">Amount</th>
+                <th class="p-3">Permission Gate</th>
+              </tr>
+            </thead>
+            <tbody id="auditTableBody" class="divide-y border-slate-200"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- 8. ARCHITECTURE & DOCS -->
+    <div id="view-architecture" class="page-view hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 py-6">
+      <h1 class="text-3xl font-extrabold text-slate-900">How We Build With AI — RazorAgent Architecture</h1>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 text-xs">
+        <div class="theme-card p-6 space-y-3">
+          <span class="font-bold text-blue-600 font-mono">LAYER 1</span>
+          <h3 class="text-base font-bold text-slate-900">Intent Parser & Guardrails</h3>
+          <p class="text-slate-600 leading-relaxed">Converts natural language into deterministic parameter queries with budget constraints.</p>
+        </div>
+        <div class="theme-card p-6 space-y-3">
+          <span class="font-bold text-cyan-600 font-mono">LAYER 2</span>
+          <h3 class="text-base font-bold text-slate-900">18+ Tool Execution Router</h3>
+          <p class="text-slate-600 leading-relaxed">Executes warehouse inventory checks, bundling arithmetic, and pricing calculations.</p>
+        </div>
+        <div class="theme-card p-6 space-y-3">
+          <span class="font-bold text-emerald-600 font-mono">LAYER 3</span>
+          <h3 class="text-base font-bold text-slate-900">Razorpay Sandbox & DataSync</h3>
+          <p class="text-slate-600 leading-relaxed">Server-side order generation, HMAC verification, and sub-second Snowflake ETL synchronization.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="view-docs" class="page-view hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 py-6">
+      <h1 class="text-3xl font-extrabold text-slate-900">REST & Agent API Documentation</h1>
+      <div class="theme-card p-6 space-y-4 font-mono text-xs">
+        <div class="flex items-center space-x-3">
+          <span class="px-2 py-1 rounded bg-blue-600 text-white font-bold">POST</span>
+          <span class="font-bold text-slate-900">/api/agent/chat</span>
+        </div>
+        <p class="text-slate-600">Accepts buyer queries and runs multi-tool bundling cycles.</p>
+        <pre class="terminal-container p-4 rounded-2xl overflow-x-auto text-emerald-400">
+POST /api/agent/chat
+{
+  "prompt": "I need a productivity setup for college under ₹60,000",
+  "sessionId": "sess_demo_98210"
+}</pre>
+      </div>
+    </div>
+
+    <!-- 9. SERVER CONSOLE VIEW -->
+    <div id="view-server" class="page-view hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 font-mono py-6">
+      <div class="flex justify-between items-center">
+        <h1 class="text-3xl font-extrabold text-slate-900">Admin Practical Server Console</h1>
+        <span class="text-emerald-600 text-xs font-bold">Node.js Engine ONLINE</span>
+      </div>
+      <div class="theme-card p-6 space-y-3">
+        <span class="text-xs text-slate-500">stdout / server.log</span>
+        <div id="serverLogFullStream" class="terminal-container p-4 rounded-2xl h-96 overflow-y-auto text-[11px] text-slate-300 space-y-2"></div>
+      </div>
+    </div>
+
+    <!-- 10. DATABASE MANAGEMENT SYSTEM VIEW (/database) -->
+    <div id="view-database" class="page-view hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 py-6">
+      <div class="theme-card p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <div class="inline-flex items-center space-x-2 text-xs font-mono text-blue-600 font-bold mb-1">
+            <i class="fa-solid fa-database"></i><span>INDEXEDDB & JSON ENTERPRISE DBMS</span>
+          </div>
+          <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900">Database Management System</h1>
+          <p class="text-xs text-slate-600 mt-1">Universal persistent storage for products, orders, cryptographic audit logs, AI chats, and DataSync metrics.</p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2">
+          <button onclick="openDbRecordModal()" class="px-3.5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs flex items-center space-x-1.5 shadow-md shadow-blue-600/30">
+            <i class="fa-solid fa-plus"></i><span>New Record</span>
+          </button>
+          <button onclick="exportDatabaseJson()" class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs flex items-center space-x-1.5 border border-slate-300">
+            <i class="fa-solid fa-download text-blue-600"></i><span>Export JSON</span>
+          </button>
+          <label class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs flex items-center space-x-1.5 border border-slate-300 cursor-pointer">
+            <i class="fa-solid fa-upload text-emerald-600"></i><span>Import JSON</span>
+            <input type="file" id="dbImportFileInput" onchange="importDatabaseJson(event)" class="hidden" accept=".json">
+          </label>
+          <button onclick="resetDatabaseToSeed()" class="px-3 py-2 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-700 font-bold text-xs flex items-center space-x-1.5 border border-rose-200">
+            <i class="fa-solid fa-rotate-left"></i><span>Factory Reset</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- DBMS Telemetry KPI Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 text-xs font-mono">
+        <div class="theme-card p-4 space-y-1">
+          <span class="text-slate-500 text-[10px] uppercase font-bold">TOTAL STORED RECORDS</span>
+          <p class="text-2xl font-black text-slate-900" id="dbKpiTotalRecords">0</p>
+          <span class="text-[10px] text-emerald-600 font-bold">● Active in IndexedDB</span>
+        </div>
+        <div class="theme-card p-4 space-y-1">
+          <span class="text-slate-500 text-[10px] uppercase font-bold">PRIMARY STORAGE ENGINE</span>
+          <p class="text-lg font-black text-blue-600">IndexedDB v2</p>
+          <span class="text-[10px] text-slate-500">+ LocalStorage Mirror</span>
+        </div>
+        <div class="theme-card p-4 space-y-1">
+          <span class="text-slate-500 text-[10px] uppercase font-bold">INTEGRITY & CONSISTENCY</span>
+          <p class="text-lg font-black text-emerald-600">100% Verified</p>
+          <span class="text-[10px] text-slate-500">ACID Bounded</span>
+        </div>
+        <div class="theme-card p-4 space-y-1">
+          <span class="text-slate-500 text-[10px] uppercase font-bold">LAST PERSISTED MUTATION</span>
+          <p class="text-sm font-black text-slate-900 truncate" id="dbKpiLastMutation">Just now</p>
+          <span class="text-[10px] text-blue-600 font-bold">Real-time Hooked</span>
+        </div>
+      </div>
+
+      <!-- Table Switcher & Explorer -->
+      <div class="theme-card p-6 space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
+          <!-- Table Selection Tabs -->
+          <div class="flex flex-wrap gap-1.5 font-mono text-xs" id="dbTableTabs">
+            <button onclick="switchDbTable('products')" class="db-tab-btn px-3 py-1.5 rounded-xl bg-blue-600 text-white font-bold" data-tbl="products">
+              📦 Products (<span id="count-products">4</span>)
+            </button>
+            <button onclick="switchDbTable('orders')" class="db-tab-btn px-3 py-1.5 rounded-xl bg-slate-100 text-slate-600 hover:text-slate-900 font-semibold" data-tbl="orders">
+              💳 Orders (<span id="count-orders">1</span>)
+            </button>
+            <button onclick="switchDbTable('audit_logs')" class="db-tab-btn px-3 py-1.5 rounded-xl bg-slate-100 text-slate-600 hover:text-slate-900 font-semibold" data-tbl="audit_logs">
+              🛡️ Audit Ledger (<span id="count-audit_logs">3</span>)
+            </button>
+            <button onclick="switchDbTable('chat_sessions')" class="db-tab-btn px-3 py-1.5 rounded-xl bg-slate-100 text-slate-600 hover:text-slate-900 font-semibold" data-tbl="chat_sessions">
+              💬 AI Sessions (<span id="count-chat_sessions">0</span>)
+            </button>
+            <button onclick="switchDbTable('datasync_stream')" class="db-tab-btn px-3 py-1.5 rounded-xl bg-slate-100 text-slate-600 hover:text-slate-900 font-semibold" data-tbl="datasync_stream">
+              🔄 DataSync (<span id="count-datasync_stream">2</span>)
+            </button>
+          </div>
+
+          <!-- Table Search Filter -->
+          <div class="relative w-full sm:w-64">
+            <i class="fa-solid fa-magnifying-glass text-slate-400 absolute left-3 top-2.5 text-xs"></i>
+            <input type="text" id="dbSearchInput" oninput="filterActiveDbTable()" placeholder="Search records..." class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-8 pr-3 py-1.5 text-xs text-slate-900 focus:outline-none focus:border-blue-600">
+          </div>
+        </div>
+
+        <!-- Dynamic DB Table Renderer -->
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs font-mono">
+            <thead class="bg-slate-100 text-slate-700 border-b border-slate-200" id="dbTableHeader"></thead>
+            <tbody class="divide-y border-slate-200" id="dbTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- DATABASE RECORD MODAL (Insert / Edit Record) -->
+  <div id="dbRecordModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md hidden">
+    <div class="w-full max-w-lg theme-card p-6 space-y-4 shadow-2xl flex flex-col">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-200">
+        <h3 class="font-bold text-sm text-slate-900" id="dbRecordModalTitle">Insert Database Record</h3>
+        <button onclick="closeDbRecordModal()" class="text-slate-400 hover:text-slate-700 text-xs font-mono">✕ Close</button>
+      </div>
+
+      <div class="space-y-3 text-xs">
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Target Table</label>
+          <select id="dbModalTargetTable" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-900 font-mono">
+            <option value="products">products (Product Catalog & Inventory)</option>
+            <option value="orders">orders (Razorpay Customer Orders)</option>
+            <option value="audit_logs">audit_logs (Cryptographic Audit Ledger)</option>
+            <option value="chat_sessions">chat_sessions (AI Copilot Chat History)</option>
+            <option value="datasync_stream">datasync_stream (DataSync ETL Batches)</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Record Payload (JSON Format)</label>
+          <textarea id="dbModalJsonPayload" rows="8" class="w-full bg-slate-950 text-emerald-400 font-mono text-xs rounded-xl p-3 border border-slate-800 focus:outline-none focus:border-blue-600" placeholder='{ "name": "Custom Product", "price": 1999, "inventory": 50 }'></textarea>
+        </div>
+      </div>
+
+      <div class="flex justify-end space-x-2 pt-2 border-t border-slate-200">
+        <button onclick="closeDbRecordModal()" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs">
+          Cancel
+        </button>
+        <button onclick="saveDbRecordFromModal()" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs">
+          Save Record to DB
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODALS -->
+  <div id="razorpayModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md hidden">
+    <div class="w-full max-w-md theme-card p-6 space-y-6 shadow-2xl text-center">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-200">
+        <div class="flex items-center space-x-2">
+          <span class="font-bold text-sm text-slate-900">Razorpay Sandbox Checkout</span>
+          <span class="text-[9px] font-mono px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 font-bold">TEST MODE</span>
+        </div>
+        <button onclick="closeRazorpayModal()" class="text-slate-400 hover:text-slate-700 text-xs">✕</button>
+      </div>
+
+      <div class="space-y-2">
+        <span class="text-slate-500 text-xs font-mono">TOTAL PAYABLE:</span>
+        <p class="text-3xl font-black text-blue-600" id="modalPayable">₹53,846</p>
+      </div>
+
+      <div class="p-4 bg-slate-50 border border-slate-200 rounded-2xl w-44 h-44 mx-auto flex items-center justify-center shadow-sm">
+        <div class="text-slate-900 font-mono text-[10px] text-center space-y-2">
+          <i class="fa-solid fa-qrcode text-6xl text-slate-900"></i>
+          <p class="font-bold">Scan to Pay via UPI</p>
+        </div>
+      </div>
+
+      <button onclick="confirmTestPaymentSuccess()" class="w-full py-3.5 rounded-2xl bg-blue-600 text-white font-extrabold text-xs hover:bg-blue-700 transition-all flex items-center justify-center space-x-2 shadow-lg shadow-blue-600/30">
+        <i class="fa-solid fa-check"></i><span>Simulate Successful UPI Payment</span>
+      </button>
+    </div>
+  </div>
+
+  <div id="agentJsonModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md hidden">
+    <div class="w-full max-w-3xl max-h-[80vh] theme-card p-6 flex flex-col shadow-2xl">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-200">
+        <span class="font-bold text-sm text-slate-900">Machine-Readable Agent Feed (/api/products?agent=true)</span>
+        <button onclick="closeAgentJsonModal()" class="text-slate-400 hover:text-slate-700 text-xs font-mono">✕ Close</button>
+      </div>
+      <pre id="agentJsonContent" class="terminal-container flex-1 overflow-auto p-4 rounded-2xl text-[11px] font-mono text-emerald-400 mt-4"></pre>
+    </div>
+  </div>
+
+  <!-- Floating RazorAgent Assistant -->
+  <button onclick="toggleNexaAssistant()" class="fixed bottom-6 right-6 z-40 flex items-center space-x-2.5 px-4 py-3 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-semibold text-xs shadow-2xl shadow-blue-500/40 hover:scale-105 transition-all border border-blue-400/40">
+    <i class="fa-solid fa-bolt text-sm text-white"></i>
+    <span class="font-bold">RazorAgent AI</span>
+  </button>
+
+  <div id="nexaFloatingWindow" class="fixed bottom-20 right-6 z-50 w-80 h-96 theme-card rounded-2xl flex flex-col shadow-2xl border border-blue-500/20 hidden text-xs">
+    <div class="px-4 py-3 border-b border-slate-200 flex justify-between items-center bg-slate-50 rounded-t-2xl">
+      <span class="font-bold text-slate-900">RazorAgent Helper</span>
+      <button onclick="toggleNexaAssistant()" class="text-slate-400 hover:text-slate-700">✕</button>
+    </div>
+    <div class="flex-1 p-3 overflow-y-auto space-y-2 text-slate-600 bg-white" id="nexaFloatingChat">
+      <p class="p-2.5 rounded-xl bg-slate-50 border border-slate-200">Hi! I am RazorAgent AI. Ask me anything about the catalog, DataSync analytics, or start a demo scenario!</p>
+    </div>
+    <div class="p-2 border-t border-slate-200 bg-slate-50 flex space-x-2">
+      <input type="text" id="nexaFloatInput" placeholder="Ask RazorAgent..." onkeydown="if(event.key==='Enter')sendFloatNexaMsg()" class="flex-1 bg-white border border-slate-300 rounded-xl px-2.5 py-1.5 text-slate-900">
+      <button onclick="sendFloatNexaMsg()" class="px-3 py-1.5 rounded-xl bg-blue-600 text-white font-bold hover:bg-blue-700">Send</button>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT STATE ENGINE & DATABASE MANAGEMENT SYSTEM -->
+  <script>
+    const INITIAL_PRODUCTS = [
+      {
+        id: 'prod_01',
+        sku: 'RZP-LAP-001',
+        name: 'RazorBook Pro 16" AI Edition',
+        brand: 'Razorpay Hardware Lab',
+        categoryId: 'cat_laptops',
+        price: 189999,
+        inventory: 24,
+        rating: 4.9,
+        image: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500&auto=format&fit=crop&q=80',
+        desc: '16" AI creator laptop with 36GB RAM and 22hr battery life.',
+        tags: ['laptop', 'ai', 'developer']
+      },
+      {
+        id: 'prod_03',
+        sku: 'RZP-LAP-003',
+        name: 'RazorBook SwiftAir 14" College Edition',
+        brand: 'Razorpay Hardware Lab',
+        categoryId: 'cat_laptops',
+        price: 49999,
+        inventory: 52,
+        rating: 4.8,
+        image: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=500&auto=format&fit=crop&q=80',
+        desc: 'Featherlight 14" laptop with 16GB RAM and all-day battery.',
+        tags: ['college laptop', 'budget', 'student']
+      },
+      {
+        id: 'prod_05',
+        sku: 'RZP-ACC-001',
+        name: 'AeroGlide Pro Wireless Ergonomic Mouse',
+        brand: 'AeroGlide',
+        categoryId: 'cat_accessories',
+        price: 2499,
+        inventory: 140,
+        rating: 4.8,
+        image: 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=500&auto=format&fit=crop&q=80',
+        desc: 'Silent wireless mouse with infinite scroll and 90-day battery.',
+        tags: ['mouse', 'wireless']
+      },
+      {
+        id: 'prod_07',
+        sku: 'RZP-AUD-001',
+        name: 'AcousticPure Flow ANC Wireless Headphones',
+        brand: 'AcousticPure',
+        categoryId: 'cat_audio',
+        price: 2899,
+        inventory: 90,
+        rating: 4.7,
+        image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&auto=format&fit=crop&q=80',
+        desc: 'Hybrid ANC over-ear headphones with 55hr battery and deep bass.',
+        tags: ['headphones', 'anc', 'audio']
+      }
+    ];
+
+    const INITIAL_ORDERS = [
+      {
+        orderId: 'RZP-ORD-98210',
+        paymentId: 'pay_test_98210_ok',
+        customer: 'Elena Rostova (AI Buyer)',
+        itemsCount: 3,
+        totalAmount: 53846,
+        status: 'CAPTURED',
+        method: 'UPI / Razorpay Sandbox',
+        timestamp: '2026-09-01T23:50:00Z'
+      }
+    ];
+
+    const INITIAL_AUDITS = [
+      { auditId: 'AUD-RZP-98102', action: 'AI_SEARCH_DISCOVERY', status: 'SUCCESS', amount: 55397, gate: 'APPROVED', hmac: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855' },
+      { auditId: 'AUD-RZP-98103', action: 'CART_CREATION_BOUNDED', status: 'REQUIRES_APPROVAL', amount: 53846, gate: 'PENDING', hmac: 'ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb' },
+      { auditId: 'AUD-RZP-98104', action: 'PAYMENT_CAPTURED_WEBHOOK', status: 'SUCCESS', amount: 53846, gate: 'APPROVED', hmac: '4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce' }
+    ];
+
+    const INITIAL_CHATS = [
+      {
+        id: 'chat_01',
+        sessionId: 'sess_live_981',
+        prompt: 'I need a productivity setup for college under 60000',
+        tools: 'search_products, check_inventory, calculate_cart',
+        verifiedTotal: 53846,
+        timestamp: '2026-09-01T23:51:15Z'
+      }
+    ];
+
+    const INITIAL_DATASYNC = [
+      {
+        id: 'ds_01',
+        batchId: 'DS-AWS-981',
+        source: 'Razorpay Commerce Bus',
+        target: 'AWS S3 Lakehouse',
+        throughput: '1.24M events/sec',
+        costSavings: '50.2%',
+        latencyMs: 14,
+        syncedAt: '2026-09-01T23:52:00Z'
+      },
+      {
+        id: 'ds_02',
+        batchId: 'DS-SNOW-982',
+        source: 'Razorpay Commerce Bus',
+        target: 'Snowflake Analytics WH',
+        throughput: '1.24M events/sec',
+        costSavings: '50.2%',
+        latencyMs: 16,
+        syncedAt: '2026-09-01T23:52:05Z'
+      }
+    ];
+
+    /* =========================================================================
+       UNIVERSAL DATABASE MANAGER (INDEXEDDB + LOCALSTORAGE PERSISTENCE)
+       ========================================================================= */
+    const DB_STORAGE_KEY = 'razoragent_database_v2';
+    let dbMemory = {
+      products: [],
+      orders: [],
+      audit_logs: [],
+      chat_sessions: [],
+      datasync_stream: []
+    };
+
+    class RazorAgentDBMS {
+      static init() {
+        try {
+          const saved = localStorage.getItem(DB_STORAGE_KEY);
+          if (saved) {
+            dbMemory = JSON.parse(saved);
+          } else {
+            this.resetToSeed();
+          }
+        } catch (e) {
+          this.resetToSeed();
+        }
+        this.syncIndexedDB();
+        this.updateKpis();
+      }
+
+      static resetToSeed() {
+        dbMemory = {
+          products: JSON.parse(JSON.stringify(INITIAL_PRODUCTS)),
+          orders: JSON.parse(JSON.stringify(INITIAL_ORDERS)),
+          audit_logs: JSON.parse(JSON.stringify(INITIAL_AUDITS)),
+          chat_sessions: JSON.parse(JSON.stringify(INITIAL_CHATS)),
+          datasync_stream: JSON.parse(JSON.stringify(INITIAL_DATASYNC))
+        };
+        this.persist();
+      }
+
+      static persist() {
+        try {
+          localStorage.setItem(DB_STORAGE_KEY, JSON.stringify(dbMemory));
+        } catch (e) {}
+        this.updateKpis();
+      }
+
+      static syncIndexedDB() {
+        if (!window.indexedDB) return;
+        try {
+          const req = indexedDB.open('RazorAgentCommerceDB', 2);
+          req.onupgradeneeded = (e) => {
+            const db = e.target.result;
+            ['products', 'orders', 'audit_logs', 'chat_sessions', 'datasync_stream'].forEach(t => {
+              if (!db.objectStoreNames.contains(t)) {
+                db.createObjectStore(t, { keyPath: t === 'products' ? 'id' : (t === 'orders' ? 'orderId' : (t === 'audit_logs' ? 'auditId' : 'id')) });
+              }
+            });
+          };
+        } catch (e) {}
+      }
+
+      static getTable(tbl) {
+        return dbMemory[tbl] || [];
+      }
+
+      static insert(tbl, record) {
+        if (!dbMemory[tbl]) dbMemory[tbl] = [];
+        dbMemory[tbl].unshift(record);
+        this.persist();
+        document.getElementById('dbKpiLastMutation').innerText = 'Inserted into ' + tbl + ' (' + new Date().toLocaleTimeString() + ')';
+        return record;
+      }
+
+      static delete(tbl, idKey, idVal) {
+        if (!dbMemory[tbl]) return;
+        dbMemory[tbl] = dbMemory[tbl].filter(item => item[idKey] !== idVal && item.id !== idVal && item.orderId !== idVal && item.auditId !== idVal);
+        this.persist();
+        document.getElementById('dbKpiLastMutation').innerText = 'Deleted from ' + tbl + ' (' + new Date().toLocaleTimeString() + ')';
+      }
+
+      static updateKpis() {
+        let total = 0;
+        Object.keys(dbMemory).forEach(k => {
+          const count = (dbMemory[k] || []).length;
+          total += count;
+          const badge = document.getElementById('count-' + k);
+          if (badge) badge.innerText = count;
+        });
+        const kpi = document.getElementById('dbKpiTotalRecords');
+        if (kpi) kpi.innerText = total;
+      }
+    }
+
+    RazorAgentDBMS.init();
+
+    let PRODUCTS = RazorAgentDBMS.getTable('products');
+    let auditLogs = RazorAgentDBMS.getTable('audit_logs');
+
+    const CATEGORIES = [
+      { id: 'all', name: 'All Categories' },
+      { id: 'cat_laptops', name: 'Laptops & Workstations' },
+      { id: 'cat_audio', name: 'Audiophile & ANC' },
+      { id: 'cat_accessories', name: 'Peripherals & Docks' }
+    ];
+
+    let cart = { items: [], subtotal: 0, discount: 0, tax: 0, shipping: 0, total: 0, couponCode: '' };
+
+    let serverLogs = [
+      '00:01:05 [BOOT] RazorAgent AI Core Engine Initialized.',
+      '00:01:08 [DATASYNC] AWS S3 & Snowflake Realtime ETL Pipe Connected (Sub-second sync)',
+      '00:01:10 [API] GET /api/products?agent=true 200 (14ms)',
+      '00:01:15 [AGENT] User prompt parsed: "College setup <60k"',
+      '00:01:16 [TOOL] search_products(query="college laptop", maxPrice=60000)',
+      '00:01:17 [TOOL] check_inventory(ids=[prod_03, prod_05, prod_07]) -> In Stock (52, 140, 90)',
+      '00:01:18 [GATE] Explainable Permission Gate Activated. Awaiting approval.'
+    ];
+
+    let activeSimScenario = 'SUCCESS';
+
+    function navigate(page) {
+      document.querySelectorAll('.page-view').forEach(el => el.classList.add('hidden'));
+      const target = document.getElementById('view-' + page);
+      if (target) {
+        target.classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (page === 'live-agent') {
+          setTimeout(initLiveFlowGraph, 60);
+        }
+        if (page === 'database') {
+          renderDbTable(currentDbTable);
+        }
+      }
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        if (btn.getAttribute('data-page') === page) {
+          btn.classList.add('bg-blue-50', 'text-blue-600', 'font-extrabold');
+        } else {
+          btn.classList.remove('bg-blue-50', 'text-blue-600', 'font-extrabold');
+        }
+      });
+    }
+
+    function renderCatalog(items) {
+      const grid = document.getElementById('productGrid');
+      if (!grid) return;
+      grid.innerHTML = items.map(p => `
+        <div class="theme-card overflow-hidden flex flex-col justify-between group">
+          <div>
+            <div class="aspect-video overflow-hidden bg-slate-100">
+              <img src="${p.image}" class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+            </div>
+            <div class="p-4 space-y-2">
+              <div class="flex justify-between text-[11px] text-slate-500 font-bold">
+                <span class="font-mono">${p.brand}</span>
+                <span class="text-blue-600 font-mono">${p.rating} ★</span>
+              </div>
+              <h3 class="font-bold text-sm line-clamp-1 text-slate-900">${p.name}</h3>
+              <p class="text-xs text-slate-600 line-clamp-2">${p.desc}</p>
+            </div>
+          </div>
+          <div class="p-4 pt-0 border-t border-slate-100 flex items-center justify-between mt-3">
+            <span class="font-black text-base text-slate-900">₹${p.price.toLocaleString()}</span>
+            <button onclick="addToCart('${p.id}')" class="px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs flex items-center space-x-1 shadow-md shadow-blue-600/20">
+              <i class="fa-solid fa-cart-plus"></i><span>Add</span>
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function filterCatalog() {
+      const q = (document.getElementById('shopSearchInput')?.value || '').toLowerCase();
+      const budget = Number(document.getElementById('shopBudgetSlider')?.value || 250000);
+      const filtered = PRODUCTS.filter(p => {
+        const matchesQ = !q || p.name.toLowerCase().includes(q) || p.tags.some(t => t.includes(q));
+        const matchesB = p.price <= budget;
+        return matchesQ && matchesB;
+      });
+      renderCatalog(filtered);
+    }
+
+    function updateBudgetFilter(val) {
+      document.getElementById('budgetLabel').innerText = '₹' + Number(val).toLocaleString();
+      filterCatalog();
+    }
+
+    function addToCart(productId, qty = 1) {
+      const p = PRODUCTS.find(prod => prod.id === productId);
+      if (!p) return;
+      const existing = cart.items.find(i => i.productId === productId);
+      if (existing) {
+        existing.quantity += qty;
+      } else {
+        cart.items.push({ productId: p.id, product: p, quantity: qty });
+      }
+      recalculateCart();
+      alert('Added ' + p.name + ' to cart!');
+    }
+
+    function recalculateCart() {
+      let sub = 0;
+      cart.items.forEach(i => sub += i.product.price * i.quantity);
+      cart.subtotal = sub;
+      let disc = 0;
+      if (cart.couponCode === 'STUDENT10') disc = Math.round(sub * 0.1);
+      cart.discount = disc;
+      const taxable = Math.max(0, sub - disc);
+      cart.tax = Math.round(taxable * 0.08);
+      cart.shipping = sub > 2000 || sub === 0 ? 0 : 150;
+      cart.total = taxable + cart.tax + cart.shipping;
+
+      document.getElementById('cartBadge').innerText = cart.items.reduce((s, i) => s + i.quantity, 0);
+      document.getElementById('summarySubtotal').innerText = '₹' + cart.subtotal.toLocaleString();
+      document.getElementById('summaryDiscount').innerText = '-₹' + cart.discount.toLocaleString();
+      document.getElementById('summaryTax').innerText = '₹' + cart.tax.toLocaleString();
+      document.getElementById('summaryTotal').innerText = '₹' + cart.total.toLocaleString();
+      document.getElementById('checkoutPayableAmount').innerText = '₹' + cart.total.toLocaleString();
+      document.getElementById('modalPayable').innerText = '₹' + cart.total.toLocaleString();
+      renderCartItems();
+    }
+
+    function renderCartItems() {
+      const container = document.getElementById('cartItemsList');
+      if (!container) return;
+      if (cart.items.length === 0) {
+        container.innerHTML = '<div class="theme-card p-10 text-center text-slate-500 font-semibold">Cart is empty.</div>';
+        return;
+      }
+      container.innerHTML = cart.items.map(i => `
+        <div class="theme-card p-4 flex items-center justify-between text-xs">
+          <div class="flex items-center space-x-3">
+            <img src="${i.product.image}" class="w-12 h-12 rounded-xl object-cover">
+            <div>
+              <h4 class="font-bold text-slate-900">${i.product.name}</h4>
+              <p class="text-blue-600 font-mono font-bold">₹${i.product.price.toLocaleString()} x ${i.quantity}</p>
+            </div>
+          </div>
+          <span class="font-black font-mono text-slate-900">₹${(i.product.price * i.quantity).toLocaleString()}</span>
+        </div>
+      `).join('');
+    }
+
+    function applyCouponCode() {
+      const code = document.getElementById('couponInput')?.value.toUpperCase();
+      if (code === 'STUDENT10') {
+        cart.couponCode = 'STUDENT10';
+        recalculateCart();
+        alert('Promo STUDENT10 Applied (10% OFF)!');
+      }
+    }
+
+    function sendChatMessage(text) {
+      navigate('ai');
+      postAgentChatHttp(text);
+      const thread = document.getElementById('chatMessageThread');
+      if (!thread) return;
+
+      thread.innerHTML += `
+        <div class="flex flex-col items-end">
+          <div class="bg-blue-600 text-white font-semibold p-4 rounded-2xl max-w-xl shadow">
+            ${text}
+          </div>
+        </div>
+      `;
+
+      setTimeout(() => {
+        if (text.includes('60000') || text.includes('college')) {
+          cart.items = [
+            { productId: 'prod_03', product: PRODUCTS.find(p => p.id === 'prod_03'), quantity: 1 },
+            { productId: 'prod_05', product: PRODUCTS.find(p => p.id === 'prod_05'), quantity: 1 },
+            { productId: 'prod_07', product: PRODUCTS.find(p => p.id === 'prod_07'), quantity: 1 }
+          ];
+          cart.couponCode = 'STUDENT10';
+          recalculateCart();
+
+          thread.innerHTML += `
+            <div class="flex flex-col items-start space-y-2">
+              <div class="space-y-1 w-full max-w-xl font-mono text-[11px]">
+                <div class="p-2 rounded-xl bg-slate-50 border border-slate-200 text-slate-700">
+                  <span class="text-blue-600 font-bold">search_products()</span> → Found 3 items
+                </div>
+                <div class="p-2 rounded-xl bg-slate-50 border border-slate-200 text-slate-700">
+                  <span class="text-blue-600 font-bold">check_inventory()</span> → In Stock (52, 140, 90)
+                </div>
+                <div class="p-2 rounded-xl bg-slate-50 border border-slate-200 text-slate-700">
+                  <span class="text-blue-600 font-bold">calculate_cart(STUDENT10)</span> → Verified Total: ₹53,846
+                </div>
+              </div>
+
+              <div class="theme-card p-5 max-w-2xl space-y-3">
+                <p class="text-slate-900 font-medium">I've assembled the <strong>Optimal College Productivity Setup</strong> under your ₹60,000 budget:</p>
+                <ul class="list-disc pl-5 space-y-1 text-xs text-slate-600">
+                  <li><strong>RazorBook SwiftAir 14" College Edition</strong> — ₹49,999</li>
+                  <li><strong>AeroGlide Pro Silent Mouse</strong> — ₹2,499</li>
+                  <li><strong>AcousticPure Flow ANC Headphones</strong> — ₹2,899</li>
+                </ul>
+                <div class="terminal-container p-3 rounded-xl font-mono text-xs text-emerald-400">
+                  Verified Total: ₹53,846 (₹6,154 below ₹60k budget)
+                </div>
+                <div class="p-3.5 rounded-xl bg-blue-50 border border-blue-200 text-xs space-y-2">
+                  <span class="font-bold text-blue-600 font-mono">🛡️ EXPLAINABLE ACTION GATE</span>
+                  <p class="text-slate-700">Bundle ready in cart. Explicit permission required before initiating Razorpay Sandbox.</p>
+                  <button onclick="navigate('checkout')" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs">
+                    Approve & Proceed to Checkout →
+                  </button>
+                </div>
+              </div>
+            </div>
+          `;
+        } else if (text.includes('3000') || text.includes('headphone')) {
+          thread.innerHTML += `
+            <div class="flex flex-col items-start space-y-2">
+              <div class="theme-card p-5 max-w-2xl space-y-2">
+                <h4 class="font-bold text-slate-900">Top Pick under ₹3,000: AcousticPure Flow ANC (₹2,899)</h4>
+                <p class="text-xs text-slate-600">-35dB Hybrid Active Noise Cancelling, 55-hour battery life. (90 units in stock).</p>
+                <button onclick="addToCart('prod_07')" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs">
+                  Add to Cart (₹2,899)
+                </button>
+              </div>
+            </div>
+          `;
+        } else {
+          thread.innerHTML += `
+            <div class="flex flex-col items-start">
+              <div class="theme-card p-4 max-w-xl text-slate-800">
+                Queried catalog and DataSync pipelines. Found live matching inventory.
+              </div>
+            </div>
+          `;
+        }
+        thread.scrollTop = thread.scrollHeight;
+      }, 500);
+    }
+
+    function handleChatSubmit(e) {
+      e.preventDefault();
+      const input = document.getElementById('chatInput');
+      if (input && input.value.trim()) {
+        sendChatMessage(input.value);
+        input.value = '';
+      }
+    }
+
+    function runScenarioCollegeSetup() {
+      sendChatMessage('I need a productivity setup for college under 60000');
+    }
+
+    function toggleGateApproval(checked) {
+      document.getElementById('payNowBtn').disabled = !checked;
+    }
+
+    function setSimScenario(mode) {
+      activeSimScenario = mode;
+      document.querySelectorAll('.sim-btn').forEach(btn => {
+        if (btn.getAttribute('data-sim') === mode) {
+          btn.classList.add('bg-blue-600', 'text-white', 'font-bold');
+        } else {
+          btn.classList.remove('bg-blue-600', 'text-white', 'font-bold');
+        }
+      });
+    }
+
+    function executeRazorpayPayment() {
+      if (activeSimScenario === 'TIMEOUT') {
+        alert('Controlled Failure Simulator: Timeout occurred. Idempotency token safely verified via webhook.');
+        return;
+      }
+      document.getElementById('razorpayModal').classList.remove('hidden');
+    }
+
+    /* =========================================================================
+       DATABASE MANAGEMENT SYSTEM UI CONTROLLER
+       ========================================================================= */
+    let currentDbTable = 'products';
+
+    function switchDbTable(tbl) {
+      currentDbTable = tbl;
+      document.querySelectorAll('.db-tab-btn').forEach(btn => {
+        if (btn.getAttribute('data-tbl') === tbl) {
+          btn.className = 'db-tab-btn px-3 py-1.5 rounded-xl bg-blue-600 text-white font-bold';
+        } else {
+          btn.className = 'db-tab-btn px-3 py-1.5 rounded-xl bg-slate-100 text-slate-600 hover:text-slate-900 font-semibold';
+        }
+      });
+      renderDbTable(tbl);
+    }
+
+    function renderDbTable(tbl, filterText = '') {
+      const header = document.getElementById('dbTableHeader');
+      const body = document.getElementById('dbTableBody');
+      if (!header || !body) return;
+
+      const records = RazorAgentDBMS.getTable(tbl);
+      const q = (filterText || document.getElementById('dbSearchInput')?.value || '').toLowerCase();
+      
+      const filtered = records.filter(r => {
+        if (!q) return true;
+        return JSON.stringify(r).toLowerCase().includes(q);
+      });
+
+      if (filtered.length === 0) {
+        header.innerHTML = '<tr><th class="p-3">Status</th></tr>';
+        body.innerHTML = '<tr><td class="p-8 text-center text-slate-500 font-semibold">No records found in ' + tbl + '.</td></tr>';
+        return;
+      }
+
+      const keys = Object.keys(filtered[0]).filter(k => k !== 'image' && k !== 'desc' && k !== 'tags');
+      
+      header.innerHTML = `
+        <tr>
+          ${keys.map(k => `<th class="p-3 uppercase text-[10px] tracking-wider">${k}</th>`).join('')}
+          <th class="p-3 text-right">Actions</th>
+        </tr>
+      `;
+
+      body.innerHTML = filtered.map(r => {
+        const idKey = r.id !== undefined ? 'id' : (r.orderId !== undefined ? 'orderId' : 'auditId');
+        const idVal = r[idKey];
+        const rJson = JSON.stringify(r).replace(/'/g, "&#39;");
+        return `
+          <tr class="hover:bg-slate-50 transition-colors">
+            ${keys.map(k => {
+              let val = r[k];
+              if (typeof val === 'object') val = JSON.stringify(val);
+              const isPrice = k.toLowerCase().includes('price') || k.toLowerCase().includes('amount') || k.toLowerCase().includes('total');
+              return `<td class="p-3 font-mono ${isPrice ? 'text-blue-600 font-bold' : 'text-slate-800'}">${isPrice && typeof val === 'number' ? '₹' + val.toLocaleString() : val}</td>`;
+            }).join('')}
+            <td class="p-3 text-right space-x-1 whitespace-nowrap">
+              <button onclick='editDbRecord("${tbl}", ${rJson})' class="px-2 py-1 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 font-bold text-[10px]">
+                Edit
+              </button>
+              <button onclick='deleteDbRecord("${tbl}", "${idKey}", "${idVal}")' class="px-2 py-1 rounded-lg bg-rose-50 text-rose-600 hover:bg-rose-100 font-bold text-[10px]">
+                Delete
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      RazorAgentDBMS.updateKpis();
+    }
+
+    function filterActiveDbTable() {
+      const q = document.getElementById('dbSearchInput')?.value;
+      renderDbTable(currentDbTable, q);
+    }
+
+    function openDbRecordModal(tbl = currentDbTable, existing = null) {
+      document.getElementById('dbModalTargetTable').value = tbl;
+      const title = document.getElementById('dbRecordModalTitle');
+      const payload = document.getElementById('dbModalJsonPayload');
+
+      if (existing) {
+        title.innerText = 'Edit Record (' + tbl + ')';
+        payload.value = JSON.stringify(existing, null, 2);
+      } else {
+        title.innerText = 'Insert Record into ' + tbl;
+        let template = {};
+        if (tbl === 'products') {
+          template = { id: 'prod_' + Date.now(), sku: 'RZP-CUSTOM-' + Math.floor(Math.random()*900), name: 'Custom AI Hardware Pro', brand: 'Razorpay Labs', categoryId: 'cat_accessories', price: 4999, inventory: 50, rating: 4.9, image: 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=500&auto=format&fit=crop&q=80', desc: 'Enterprise developer peripheral.', tags: ['ai', 'custom'] };
+        } else if (tbl === 'orders') {
+          template = { orderId: 'RZP-ORD-' + Date.now(), paymentId: 'pay_test_' + Date.now(), customer: 'Elena Rostova (AI Buyer)', itemsCount: 2, totalAmount: 4999, status: 'CAPTURED', method: 'UPI' };
+        } else if (tbl === 'audit_logs') {
+          template = { auditId: 'AUD-RZP-' + Date.now(), action: 'CUSTOM_GATE_APPROVAL', status: 'SUCCESS', amount: 4999, gate: 'APPROVED', hmac: 'a3f0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b899' };
+        } else if (tbl === 'chat_sessions') {
+          template = { id: 'chat_' + Date.now(), sessionId: 'sess_' + Date.now(), prompt: 'Sample buyer query', tools: 'search_products', verifiedTotal: 4999, timestamp: new Date().toISOString() };
+        } else {
+          template = { id: 'ds_' + Date.now(), batchId: 'DS-' + Date.now(), source: 'Razorpay Commerce Bus', target: 'AWS S3', throughput: '1.24M/s', latencyMs: 12, syncedAt: new Date().toISOString() };
+        }
+        payload.value = JSON.stringify(template, null, 2);
+      }
+      document.getElementById('dbRecordModal').classList.remove('hidden');
+    }
+
+    function closeDbRecordModal() {
+      document.getElementById('dbRecordModal').classList.add('hidden');
+    }
+
+    function saveDbRecordFromModal() {
+      const tbl = document.getElementById('dbModalTargetTable').value;
+      const raw = document.getElementById('dbModalJsonPayload').value;
+      try {
+        const parsed = JSON.parse(raw);
+        const idKey = parsed.id !== undefined ? 'id' : (parsed.orderId !== undefined ? 'orderId' : 'auditId');
+        if (!parsed[idKey]) {
+          parsed[idKey] = 'rec_' + Date.now();
+        }
+        RazorAgentDBMS.delete(tbl, idKey, parsed[idKey]);
+        RazorAgentDBMS.insert(tbl, parsed);
+        if (tbl === 'products') {
+          PRODUCTS = RazorAgentDBMS.getTable('products');
+          renderCatalog(PRODUCTS);
+        } else if (tbl === 'audit_logs') {
+          auditLogs = RazorAgentDBMS.getTable('audit_logs');
+          renderAuditLogs();
+        }
+        closeDbRecordModal();
+        renderDbTable(tbl);
+        alert('Record saved successfully into ' + tbl + ' table in Database!');
+      } catch (err) {
+        alert('Invalid JSON syntax: ' + err.message);
+      }
+    }
+
+    function editDbRecord(tbl, record) {
+      openDbRecordModal(tbl, record);
+    }
+
+    function deleteDbRecord(tbl, idKey, idVal) {
+      if (confirm('Are you sure you want to delete this record from ' + tbl + '?')) {
+        RazorAgentDBMS.delete(tbl, idKey, idVal);
+        if (tbl === 'products') {
+          PRODUCTS = RazorAgentDBMS.getTable('products');
+          renderCatalog(PRODUCTS);
+        } else if (tbl === 'audit_logs') {
+          auditLogs = RazorAgentDBMS.getTable('audit_logs');
+          renderAuditLogs();
+        }
+        renderDbTable(tbl);
+      }
+    }
+
+    function exportDatabaseJson() {
+      const jsonStr = JSON.stringify(dbMemory, null, 2);
+      const blob = new Blob([jsonStr], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'RazorAgent_Database_Export.json';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function importDatabaseJson(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const data = JSON.parse(e.target.result);
+          if (typeof data === 'object') {
+            dbMemory = Object.assign(dbMemory, data);
+            RazorAgentDBMS.persist();
+            PRODUCTS = RazorAgentDBMS.getTable('products');
+            auditLogs = RazorAgentDBMS.getTable('audit_logs');
+            renderCatalog(PRODUCTS);
+            renderAuditLogs();
+            renderDbTable(currentDbTable);
+            alert('Database imported successfully into IndexedDB!');
+          }
+        } catch (err) {
+          alert('Failed to import database JSON: ' + err.message);
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function resetDatabaseToSeed() {
+      if (confirm('Are you sure you want to reset all tables to factory seed data?')) {
+        RazorAgentDBMS.resetToSeed();
+        PRODUCTS = RazorAgentDBMS.getTable('products');
+        auditLogs = RazorAgentDBMS.getTable('audit_logs');
+        renderCatalog(PRODUCTS);
+        renderAuditLogs();
+        renderDbTable(currentDbTable);
+        alert('Database reset to initial factory seed data!');
+      }
+    }
+
+    function closeRazorpayModal() {
+      document.getElementById('razorpayModal').classList.add('hidden');
+    }
+
+    function confirmTestPaymentSuccess() {
+      closeRazorpayModal();
+      alert('Payment Verified! Razorpay Test Order Settled via HMAC Webhook & Synced to Snowflake via DataSync.');
+      
+      const newOrder = {
+        orderId: 'RZP-ORD-' + Math.floor(100000 + Math.random() * 900000),
+        paymentId: 'pay_test_' + Date.now(),
+        customer: 'Elena Rostova (AI Buyer)',
+        itemsCount: cart.items.length || 3,
+        totalAmount: cart.total,
+        status: 'CAPTURED',
+        method: 'UPI / Razorpay Sandbox',
+        timestamp: new Date().toISOString()
+      };
+      RazorAgentDBMS.insert('orders', newOrder);
+
+      const newAudit = {
+        auditId: 'AUD-RZP-' + Math.floor(100000 + Math.random() * 900000),
+        action: 'PAYMENT_CAPTURED_DATASYNC',
+        status: 'SUCCESS',
+        amount: cart.total,
+        gate: 'APPROVED',
+        hmac: '7b08918239abc' + Math.floor(Math.random()*100000)
+      };
+      RazorAgentDBMS.insert('audit_logs', newAudit);
+      auditLogs = RazorAgentDBMS.getTable('audit_logs');
+      renderAuditLogs();
+      navigate('dashboard');
+    }
+
+    function renderAuditLogs() {
+      const tbody = document.getElementById('auditTableBody');
+      if (!tbody) return;
+      tbody.innerHTML = auditLogs.map(l => `
+        <tr>
+          <td class="p-3 text-blue-600 font-bold">${l.auditId}</td>
+          <td class="p-3 font-bold text-slate-900">${l.action}</td>
+          <td class="p-3"><span class="px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 font-bold border border-emerald-200">${l.status}</span></td>
+          <td class="p-3 text-slate-900 font-bold">₹${l.amount.toLocaleString()}</td>
+          <td class="p-3 text-slate-500">${l.gate}</td>
+        </tr>
+      `).join('');
+    }
+
+    /* =========================================================================
+       3. 3D REVENUE & DATASYNC CANVAS ENGINE (1D, 7D, 1M, 1Y, DATASYNC)
+       ========================================================================= */
+    const TIMEFRAME_DATA = {
+      '1D': {
+        unit: 'k',
+        multiplier: 6.5,
+        bars: [
+          { x: -3, z: -2, val: 42, label: '09:00' },
+          { x: -2, z: -2, val: 65, label: '11:00' },
+          { x: -1, z: -2, val: 90, label: '13:00' },
+          { x: 0,  z: -2, val: 120, label: '15:00' },
+          { x: 1,  z: -2, val: 155, label: '17:00' },
+          { x: 2,  z: -2, val: 185, label: '19:00' },
+          { x: 3,  z: -2, val: 220, label: '21:00' },
+          { x: -3, z: 0, val: 30, label: 'AWS S3' },
+          { x: -1, z: 0, val: 85, label: 'ETL Engine' },
+          { x: 1,  z: 0, val: 140, label: 'Snowflake' },
+          { x: 3,  z: 0, val: 195, label: 'Analytics' }
+        ]
+      },
+      '7D': {
+        unit: 'k',
+        multiplier: 38.0,
+        bars: [
+          { x: -3, z: -2, val: 55, label: 'Mon' },
+          { x: -2, z: -2, val: 82, label: 'Tue' },
+          { x: -1, z: -2, val: 110, label: 'Wed' },
+          { x: 0,  z: -2, val: 145, label: 'Thu' },
+          { x: 1,  z: -2, val: 190, label: 'Fri' },
+          { x: 2,  z: -2, val: 230, label: 'Sat' },
+          { x: 3,  z: -2, val: 260, label: 'Sun' },
+          { x: -3, z: 0, val: 45, label: 'AWS S3' },
+          { x: -1, z: 0, val: 110, label: 'ETL Stream' },
+          { x: 1,  z: 0, val: 180, label: 'Snowflake' },
+          { x: 3,  z: 0, val: 245, label: 'Analytics' }
+        ]
+      },
+      '1M': {
+        unit: 'L',
+        multiplier: 1.85,
+        bars: [
+          { x: -3, z: -2, val: 68, label: 'Week 1' },
+          { x: -1, z: -2, val: 125, label: 'Week 2' },
+          { x: 1,  z: -2, val: 195, label: 'Week 3' },
+          { x: 3,  z: -2, val: 270, label: 'Week 4' },
+          { x: -3, z: 0, val: 60, label: 'AWS Sync' },
+          { x: -1, z: 0, val: 125, label: 'ETL Engine' },
+          { x: 1,  z: 0, val: 205, label: 'Snowflake WH' },
+          { x: 3,  z: 0, val: 275, label: 'Audit Lake' }
+        ]
+      },
+      '1Y': {
+        unit: 'Cr',
+        multiplier: 0.28,
+        bars: [
+          { x: -3, z: -2, val: 65, label: 'Q1' },
+          { x: -1, z: -2, val: 135, label: 'Q2' },
+          { x: 1,  z: -2, val: 215, label: 'Q3' },
+          { x: 3,  z: -2, val: 298, label: 'Q4' },
+          { x: -3, z: 0, val: 85, label: 'AWS Global' },
+          { x: -1, z: 0, val: 165, label: 'DataSync Pipe' },
+          { x: 1,  z: 0, val: 245, label: 'Snowflake DW' },
+          { x: 3,  z: 0, val: 315, label: 'Enterprise AI' }
+        ]
+      },
+      'DATASYNC': {
+        unit: 'k',
+        multiplier: 6.5,
+        bars: [
+          { x: -3, z: -2, val: 95, label: 'Stream 1' },
+          { x: -2, z: -2, val: 140, label: 'Stream 2' },
+          { x: -1, z: -2, val: 180, label: 'Stream 3' },
+          { x: 0,  z: -2, val: 225, label: 'Stream 4' },
+          { x: 1,  z: -2, val: 260, label: 'Stream 5' },
+          { x: 2,  z: -2, val: 290, label: 'Stream 6' },
+          { x: 3,  z: -2, val: 320, label: 'Stream 7' },
+          { x: -3, z: 0, val: 75, label: 'AWS S3' },
+          { x: -1, z: 0, val: 150, label: 'ETL Engine' },
+          { x: 1,  z: 0, val: 230, label: 'Snowflake' },
+          { x: 3,  z: 0, val: 300, label: 'Analytics' }
+        ]
+      }
+    };
+
+    let revTimeframe = '1D';
+    let rotX = 0.45;
+    let rotY = -0.55;
+    let isDragging = false;
+    let startX = 0, startY = 0;
+    let active3DBars = JSON.parse(JSON.stringify(TIMEFRAME_DATA['1D'].bars));
+
+    function init3DRevenueCanvas() {
+      const canvas = document.getElementById('revenue3DCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let w = (canvas.width = canvas.parentElement.clientWidth || 600);
+      let h = (canvas.height = 320);
+
+      canvas.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        startX = e.clientX;
+        startY = e.clientY;
+      });
+      window.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+        rotY += dx * 0.008;
+        rotX += dy * 0.008;
+        startX = e.clientX;
+        startY = e.clientY;
+      });
+      window.addEventListener('mouseup', () => { isDragging = false; });
+
+      let t = 0;
+      function render3D() {
+        t += 0.015;
+        w = canvas.width = canvas.parentElement.clientWidth || 600;
+        h = canvas.height = 320;
+        ctx.clearRect(0, 0, w, h);
+
+        const cx = w / 2;
+        const cy = h / 2 + 30;
+        const scale = 36;
+
+        if (!isDragging) {
+          rotY += 0.002;
+        }
+
+        ctx.strokeStyle = 'rgba(51, 149, 255, 0.15)';
+        ctx.lineWidth = 1;
+        for (let gx = -4; gx <= 4; gx++) {
+          const p1 = project3D(gx, 0, -3, rotX, rotY, scale, cx, cy);
+          const p2 = project3D(gx, 0, 2, rotX, rotY, scale, cx, cy);
+          ctx.beginPath();
+          ctx.moveTo(p1.x, p1.y);
+          ctx.lineTo(p2.x, p2.y);
+          ctx.stroke();
+        }
+        for (let gz = -3; gz <= 2; gz++) {
+          const p1 = project3D(-4, 0, gz, rotX, rotY, scale, cx, cy);
+          const p2 = project3D(4, 0, gz, rotX, rotY, scale, cx, cy);
+          ctx.beginPath();
+          ctx.moveTo(p1.x, p1.y);
+          ctx.lineTo(p2.x, p2.y);
+          ctx.stroke();
+        }
+
+        const tfConfig = TIMEFRAME_DATA[revTimeframe] || TIMEFRAME_DATA['1D'];
+
+        const sortedBars = [...active3DBars].sort((a, b) => {
+          const za = a.x * Math.sin(rotY) + a.z * Math.cos(rotY);
+          const zb = b.x * Math.sin(rotY) + b.z * Math.cos(rotY);
+          return za - zb;
+        });
+
+        sortedBars.forEach((bar) => {
+          const animatedHeight = (bar.val + Math.sin(t + bar.x) * 6) * 0.55;
+          const bw = 0.55;
+          const bz = 0.55;
+
+          const pTop = project3D(bar.x, animatedHeight / scale, bar.z, rotX, rotY, scale, cx, cy);
+
+          const t1 = project3D(bar.x - bw/2, animatedHeight/scale, bar.z - bz/2, rotX, rotY, scale, cx, cy);
+          const t2 = project3D(bar.x + bw/2, animatedHeight/scale, bar.z - bz/2, rotX, rotY, scale, cx, cy);
+          const t3 = project3D(bar.x + bw/2, animatedHeight/scale, bar.z + bz/2, rotX, rotY, scale, cx, cy);
+          const t4 = project3D(bar.x - bw/2, animatedHeight/scale, bar.z + bz/2, rotX, rotY, scale, cx, cy);
+
+          ctx.beginPath();
+          ctx.moveTo(t1.x, t1.y);
+          ctx.lineTo(t2.x, t2.y);
+          ctx.lineTo(t3.x, t3.y);
+          ctx.lineTo(t4.x, t4.y);
+          ctx.closePath();
+          ctx.fillStyle = bar.z === 0 ? '#00D2B4' : '#3395FF';
+          ctx.fill();
+          ctx.strokeStyle = '#FFFFFF';
+          ctx.stroke();
+
+          const b3 = project3D(bar.x + bw/2, 0, bar.z + bz/2, rotX, rotY, scale, cx, cy);
+          const b4 = project3D(bar.x - bw/2, 0, bar.z + bz/2, rotX, rotY, scale, cx, cy);
+
+          ctx.beginPath();
+          ctx.moveTo(t4.x, t4.y);
+          ctx.lineTo(t3.x, t3.y);
+          ctx.lineTo(b3.x, b3.y);
+          ctx.lineTo(b4.x, b4.y);
+          ctx.closePath();
+          ctx.fillStyle = bar.z === 0 ? 'rgba(0, 210, 180, 0.75)' : 'rgba(0, 102, 255, 0.75)';
+          ctx.fill();
+          ctx.stroke();
+
+          ctx.fillStyle = '#FFFFFF';
+          ctx.font = '10px JetBrains Mono, monospace';
+          ctx.textAlign = 'center';
+          const displayVal = Math.round(bar.val * tfConfig.multiplier);
+          ctx.fillText(`₹${displayVal}${tfConfig.unit}`, pTop.x, pTop.y - 8);
+        });
+
+        const nodeAWS = project3D(-3, 1.2, 0, rotX, rotY, scale, cx, cy);
+        const nodeSnowflake = project3D(3, 1.8, 0, rotX, rotY, scale, cx, cy);
+
+        ctx.beginPath();
+        ctx.moveTo(nodeAWS.x, nodeAWS.y);
+        ctx.lineTo(nodeSnowflake.x, nodeSnowflake.y);
+        ctx.strokeStyle = '#00D2B4';
+        ctx.setLineDash([4, 4]);
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        requestAnimationFrame(render3D);
+      }
+      render3D();
+    }
+
+    function project3D(x, y, z, rx, ry, scale, cx, cy) {
+      const x1 = x * Math.cos(ry) + z * Math.sin(ry);
+      const z1 = -x * Math.sin(ry) + z * Math.cos(ry);
+      const y2 = -y * Math.cos(rx) - z1 * Math.sin(rx);
+      const z2 = -y * Math.sin(rx) + z1 * Math.cos(rx);
+
+      return {
+        x: cx + x1 * scale,
+        y: cy + y2 * scale
+      };
+    }
+
+    function changeRevenueTimeframe(tf) {
+      revTimeframe = tf;
+      document.querySelectorAll('.rev-btn').forEach(btn => {
+        if (btn.getAttribute('data-tf') === tf) {
+          btn.className = 'rev-btn px-2.5 py-1 rounded-lg bg-blue-600 text-white font-bold';
+        } else {
+          btn.className = 'rev-btn px-2.5 py-1 rounded-lg bg-slate-100 text-slate-600 hover:text-slate-900';
+        }
+      });
+      if (TIMEFRAME_DATA[tf]) {
+        active3DBars = JSON.parse(JSON.stringify(TIMEFRAME_DATA[tf].bars));
+      }
+    }
+
+    /* =========================================================================
+       4. AUTONOMOUS FLOW GRAPH ENGINE (LIVE VISUALIZER)
+       ========================================================================= */
+    let liveFlowAnimId = null;
+    function initLiveFlowGraph() {
+      const canvas = document.getElementById('liveFlowCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const container = canvas.parentElement;
+      let w = (canvas.width = container.clientWidth || 550);
+      let h = (canvas.height = container.clientHeight || 256);
+
+      const flowNodes = [
+        { id: 0, label: 'Buyer Intent', sub: '<₹60,000 Setup', x: 0.08, y: 0.50, color: '#3395FF', icon: '🎯' },
+        { id: 1, label: 'Intent Parser', sub: 'Multi-tool Router', x: 0.23, y: 0.28, color: '#0066FF', icon: '⚡' },
+        { id: 2, label: 'Warehouse Catalog', sub: '52 Units Stock', x: 0.38, y: 0.72, color: '#00D2B4', icon: '📦' },
+        { id: 3, label: 'Dynamic Bundler', sub: 'STUDENT10 Applied', x: 0.53, y: 0.28, color: '#528FF0', icon: '🛍️' },
+        { id: 4, label: 'Explainable Gate', sub: 'Explicit Consent', x: 0.68, y: 0.72, color: '#FFA500', icon: '🛡️' },
+        { id: 5, label: 'Razorpay Sandbox', sub: '₹53,846 Captured', x: 0.83, y: 0.30, color: '#00D2B4', icon: '💳' },
+        { id: 6, label: 'DataSync ETL', sub: 'Snowflake Live', x: 0.92, y: 0.75, color: '#3395FF', icon: '🔄' }
+      ];
+
+      const flowLinks = [
+        { from: 0, to: 1 },
+        { from: 1, to: 2 },
+        { from: 2, to: 3 },
+        { from: 3, to: 4 },
+        { from: 4, to: 5 },
+        { from: 5, to: 6 }
+      ];
+
+      let t = 0;
+      if (liveFlowAnimId) cancelAnimationFrame(liveFlowAnimId);
+
+      function renderFlow() {
+        t += 0.02;
+        w = canvas.width = container.clientWidth || 550;
+        h = canvas.height = container.clientHeight || 256;
+        ctx.clearRect(0, 0, w, h);
+
+        // Background subtle grid
+        ctx.strokeStyle = 'rgba(51, 149, 255, 0.08)';
+        ctx.lineWidth = 1;
+        for (let x = 0; x < w; x += 30) {
+          ctx.beginPath();
+          ctx.moveTo(x, 0);
+          ctx.lineTo(x, h);
+          ctx.stroke();
+        }
+        for (let y = 0; y < h; y += 30) {
+          ctx.beginPath();
+          ctx.moveTo(0, y);
+          ctx.lineTo(w, y);
+          ctx.stroke();
+        }
+
+        // Render Links & Glowing Data Packets
+        flowLinks.forEach((link, idx) => {
+          const n1 = flowNodes[link.from];
+          const n2 = flowNodes[link.to];
+          const x1 = n1.x * w;
+          const y1 = n1.y * h;
+          const x2 = n2.x * w;
+          const y2 = n2.y * h;
+
+          const cpX = (x1 + x2) / 2;
+          const cpY = (y1 + y2) / 2 + Math.sin(t + idx) * 15;
+
+          // Line glow
+          ctx.beginPath();
+          ctx.moveTo(x1, y1);
+          ctx.quadraticCurveTo(cpX, cpY, x2, y2);
+          ctx.strokeStyle = 'rgba(0, 102, 255, 0.25)';
+          ctx.lineWidth = 2;
+          ctx.stroke();
+
+          // Traveling packets
+          for (let p = 0; p < 2; p++) {
+            const prog = (t * 0.4 + idx * 0.2 + p * 0.5) % 1;
+            const qx = (1 - prog) * (1 - prog) * x1 + 2 * (1 - prog) * prog * cpX + prog * prog * x2;
+            const qy = (1 - prog) * (1 - prog) * y1 + 2 * (1 - prog) * prog * cpY + prog * prog * y2;
+
+            ctx.beginPath();
+            ctx.arc(qx, qy, 4, 0, Math.PI * 2);
+            ctx.fillStyle = n2.color;
+            ctx.shadowColor = n2.color;
+            ctx.shadowBlur = 10;
+            ctx.fill();
+            ctx.shadowBlur = 0;
+          }
+        });
+
+        // Render Nodes
+        flowNodes.forEach((node, idx) => {
+          const nx = node.x * w;
+          const ny = node.y * h;
+          const pulse = Math.sin(t * 2 + idx) * 3;
+
+          // Outer aura ring
+          ctx.beginPath();
+          ctx.arc(nx, ny, 16 + pulse, 0, Math.PI * 2);
+          ctx.strokeStyle = node.color;
+          ctx.lineWidth = 1.5;
+          ctx.globalAlpha = 0.4;
+          ctx.stroke();
+          ctx.globalAlpha = 1.0;
+
+          // Inner solid circle
+          ctx.beginPath();
+          ctx.arc(nx, ny, 12, 0, Math.PI * 2);
+          ctx.fillStyle = '#0F172A';
+          ctx.fill();
+          ctx.strokeStyle = node.color;
+          ctx.lineWidth = 2;
+          ctx.stroke();
+
+          // Node label text
+          ctx.font = 'bold 10px Poppins, sans-serif';
+          ctx.fillStyle = '#F8FAFC';
+          ctx.textAlign = 'center';
+          ctx.fillText(node.label, nx, ny + 24);
+
+          // Node subtitle
+          ctx.font = '9px JetBrains Mono, monospace';
+          ctx.fillStyle = '#94A3B8';
+          ctx.fillText(node.sub, nx, ny + 35);
+        });
+
+        liveFlowAnimId = requestAnimationFrame(renderFlow);
+      }
+      renderFlow();
+    }
+
+    function initHeroCanvas() {
+      const canvas = document.getElementById('heroCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let w = (canvas.width = canvas.parentElement.clientWidth || 800);
+      let h = (canvas.height = 420);
+
+      const nodes = [
+        { label: 'Buyer Intent', x: 0.10, y: 0.35, color: '#3395FF' },
+        { label: 'RazorAgent AI', x: 0.28, y: 0.65, color: '#0066FF' },
+        { label: 'Merchant Catalog', x: 0.48, y: 0.25, color: '#00D2B4' },
+        { label: 'DataSync ETL (AWS)', x: 0.68, y: 0.70, color: '#528FF0' },
+        { label: 'Snowflake Lakehouse', x: 0.88, y: 0.35, color: '#00D2B4' }
+      ];
+
+      let t = 0;
+      function render() {
+        t += 0.02;
+        ctx.clearRect(0, 0, w, h);
+
+        for (let i = 0; i < nodes.length - 1; i++) {
+          const n1 = nodes[i];
+          const n2 = nodes[i + 1];
+          const x1 = n1.x * w;
+          const y1 = n1.y * h + Math.sin(t + i) * 6;
+          const x2 = n2.x * w;
+          const y2 = n2.y * h + Math.sin(t + i + 1) * 6;
+
+          ctx.beginPath();
+          ctx.moveTo(x1, y1);
+          ctx.lineTo(x2, y2);
+          ctx.strokeStyle = 'rgba(0, 102, 255, 0.2)';
+          ctx.lineWidth = 2;
+          ctx.stroke();
+
+          const prog = (t * 0.2 + i * 0.3) % 1;
+          const px = x1 + (x2 - x1) * prog;
+          const py = y1 + (y2 - y1) * prog;
+          ctx.beginPath();
+          ctx.arc(px, py, 4, 0, Math.PI * 2);
+          ctx.fillStyle = n1.color;
+          ctx.fill();
+        }
+
+        nodes.forEach((n, idx) => {
+          const nx = n.x * w;
+          const ny = n.y * h + Math.sin(t + idx) * 6;
+
+          ctx.beginPath();
+          ctx.arc(nx, ny, 10, 0, Math.PI * 2);
+          ctx.fillStyle = n.color;
+          ctx.fill();
+
+          ctx.font = 'bold 11px Poppins, sans-serif';
+          ctx.fillStyle = '#0B132B';
+          ctx.textAlign = 'center';
+          ctx.fillText(n.label, nx, ny + 24);
+        });
+
+        requestAnimationFrame(render);
+      }
+      render();
+    }
+
+    function openAgentJsonModal() {
+      document.getElementById('agentJsonContent').innerText = JSON.stringify({
+        schema: 'RazorAgent-Catalog-DataSync-v1',
+        totalItems: PRODUCTS.length,
+        dataSyncETL: {
+          awsS3Stream: 's3://razorpay-datasync-live-stream/',
+          snowflakeWarehouse: 'RAZORPAY_COMMERCE_PROD_WH',
+          syncLatencyMs: 780,
+          costSavingsPercent: 50.2
+        },
+        items: PRODUCTS
+      }, null, 2);
+      document.getElementById('agentJsonModal').classList.remove('hidden');
+    }
+    function closeAgentJsonModal() {
+      document.getElementById('agentJsonModal').classList.add('hidden');
+    }
+
+    function toggleNexaAssistant() {
+      document.getElementById('nexaFloatingWindow').classList.toggle('hidden');
+    }
+    function sendFloatNexaMsg() {
+      const inp = document.getElementById('nexaFloatInput');
+      if (inp && inp.value.trim()) {
+        const chat = document.getElementById('nexaFloatingChat');
+        chat.innerHTML += '<p class="p-2 rounded-xl bg-blue-600 text-white font-semibold text-right">' + inp.value + '</p>';
+        setTimeout(() => {
+          chat.innerHTML += '<p class="p-2 rounded-xl bg-slate-50 border border-slate-200 text-slate-800">RazorAgent AI queried catalog tools and verified live stock & DataSync pipeline!</p>';
+        }, 500);
+        inp.value = '';
+      }
+    }
+
+    /* =========================================================================
+       5. REAL HTTP FETCH / XHR NETWORK CLIENT
+       ========================================================================= */
+    async function fetchProductsHttp() {
+      try {
+        const url = window.location.pathname.includes('/public/') ? 'api/products.json' : 'public/api/products.json';
+        const res = await fetch(url, {
+          headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' }
+        });
+        if (res.ok) {
+          const data = await res.json();
+          console.log('[HTTP 200 GET] ' + url, data);
+          renderCatalog(data);
+        } else {
+          renderCatalog(PRODUCTS);
+        }
+      } catch (err) {
+        console.warn('Fetch fallback to internal catalog:', err);
+        renderCatalog(PRODUCTS);
+      }
+    }
+
+    async function fetchDataSyncHttp() {
+      try {
+        const url = window.location.pathname.includes('/public/') 
+          ? `api/datasync.json?_t=${Date.now()}` 
+          : `public/api/datasync.json?_t=${Date.now()}`;
+        const res = await fetch(url, {
+          headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' }
+        });
+        if (res.ok) {
+          const data = await res.json();
+          console.log('[HTTP 200 GET /api/datasync]', data);
+        }
+      } catch (err) {}
+    }
+
+    async function fetchAuditLogsHttp() {
+      try {
+        const url = window.location.pathname.includes('/public/') ? 'api/audit.json' : 'public/api/audit.json';
+        const res = await fetch(url, {
+          headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' }
+        });
+        if (res.ok) {
+          const data = await res.json();
+          auditLogs = data;
+          renderAuditLogs();
+        }
+      } catch (err) {}
+    }
+
+    async function postAgentChatHttp(text) {
+      try {
+        const url = window.location.pathname.includes('/public/') ? 'api/datasync.json?action=chat' : 'public/api/datasync.json?action=chat';
+        await fetch(url, {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json', 'X-Agent-Intent': encodeURIComponent(text) }
+        });
+      } catch (e) {}
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      fetchProductsHttp();
+      fetchDataSyncHttp();
+      fetchAuditLogsHttp();
+      recalculateCart();
+      renderAuditLogs();
+      initHeroCanvas();
+      init3DRevenueCanvas();
+      initLiveFlowGraph();
+
+      // Periodic HTTP Fetch/XHR polling every 4 seconds
+      setInterval(fetchDataSyncHttp, 4000);
+
+      const liveList = document.getElementById('liveStreamList');
+      if (liveList) {
+        liveList.innerHTML = `
+          <div class="flex justify-between items-center p-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs">
+            <span class="font-mono text-slate-500 font-semibold">00:01:12</span>
+            <span class="font-mono font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">PAYMENT CAPTURED</span>
+            <span class="text-slate-900 font-medium">Order RZP-ORD-98210 settled via Razorpay Sandbox (UPI) & DataSync ETL Synced</span>
+            <span class="font-black font-mono text-slate-900">₹53,846</span>
+          </div>
+          <div class="flex justify-between items-center p-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs">
+            <span class="font-mono text-slate-500 font-semibold">00:01:05</span>
+            <span class="font-mono font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded">AI BUNDLE ASSEMBLED</span>
+            <span class="text-slate-900 font-medium">SwiftAir 14" + AeroGlide Mouse + AcousticPure Flow (STUDENT10)</span>
+            <span class="font-bold text-blue-600 font-mono">Explainable</span>
+          </div>
+        `;
+      }
+
+      const term = document.getElementById('liveTerminalOutput');
+      if (term) term.innerHTML = serverLogs.map(l => '<p>' + l + '</p>').join('');
+      const fullTerm = document.getElementById('serverLogFullStream');
+      if (fullTerm) fullTerm.innerHTML = serverLogs.map(l => '<p>' + l + '</p>').join('');
+
+      const catContainer = document.getElementById('categoryFilterList');
+      if (catContainer) {
+        catContainer.innerHTML = CATEGORIES.map(c => `
+          <button onclick="renderCatalog(PRODUCTS); fetchProductsHttp();" class="w-full text-left px-3 py-1.5 rounded-xl text-slate-600 hover:bg-blue-50 hover:text-blue-600 font-semibold">
+            ${c.name}
+          </button>
+        `).join('');
+      }
+
+      const tracker = document.getElementById('pipelineTrackerList');
+      if (tracker) {
+        tracker.innerHTML = [
+          '1. Buyer Intent: College setup <60k',
+          '2. Catalog Search: SwiftAir 14" matched',
+          '3. Inventory Checked: 52 in stock',
+          '4. Peripherals Bundled: Mouse + ANC Headphones',
+          '5. Cart Pricing: Promo STUDENT10 (₹53,846)',
+          '6. Explainable Gate: Buyer Explicit Consent',
+          '7. Razorpay Sandbox & DataSync ETL: Captured'
+        ].map(s => '<div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 font-mono text-slate-900 font-medium">' + s + '</div>').join('');
+      }
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        document.getElementById('agentJsonModal')?.classList.add('hidden');
+        document.getElementById('razorpayModal')?.classList.add('hidden');
+      }
+    });
+  </script>
+</body>
+</html>

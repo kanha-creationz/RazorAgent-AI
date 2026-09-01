@@ -1,0 +1,21 @@
+{
+  "status": "ONLINE",
+  "throughput": "1.24M events/sec",
+  "costSavings": "50.2%",
+  "targets": ["AWS S3", "Snowflake Lakehouse"],
+  "syncLatencyMs": 14,
+  "liveStream": [
+    {
+      "timestamp": "00:01:12",
+      "type": "PAYMENT_CAPTURED",
+      "message": "Order RZP-ORD-98210 settled via Razorpay Sandbox (UPI) & DataSync ETL Synced",
+      "amount": "₹53,846"
+    },
+    {
+      "timestamp": "00:01:05",
+      "type": "AI_BUNDLE_ASSEMBLED",
+      "message": "SwiftAir 14\" + AeroGlide Mouse + AcousticPure Flow (STUDENT10)",
+      "amount": "Explainable"
+    }
+  ]
+}

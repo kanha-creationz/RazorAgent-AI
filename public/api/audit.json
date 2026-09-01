@@ -1,0 +1,5 @@
+[
+  { "auditId": "AUD-RZP-98102", "action": "AI_SEARCH_DISCOVERY", "status": "SUCCESS", "amount": 55397, "gate": "APPROVED" },
+  { "auditId": "AUD-RZP-98103", "action": "CART_CREATION_BOUNDED", "status": "REQUIRES_APPROVAL", "amount": 53846, "gate": "PENDING" },
+  { "auditId": "AUD-RZP-98104", "action": "PAYMENT_CAPTURED_WEBHOOK", "status": "SUCCESS", "amount": 53846, "gate": "APPROVED" }
+]

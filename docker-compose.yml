@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/nexora_db?schema=public
+      - JWT_SECRET=nexora-jwt-super-secret-key-32chars-min-2026
+      - RAZORPAY_KEY_ID=rzp_test_mock_nexora2026
+      - RAZORPAY_KEY_SECRET=mock_secret_nexora_safe_key_2026
+      - RAZORPAY_WEBHOOK_SECRET=whsec_nexora_test_webhook_key_2026
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: nexora_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
