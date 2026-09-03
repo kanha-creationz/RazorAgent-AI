@@ -51,6 +51,8 @@
   
   <!-- FontAwesome Icons via CDN -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Three.js CDN for 3D AI Robot Agent -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
   <style>
     /* =========================================================================
@@ -203,38 +205,47 @@
     <div id="view-landing" class="page-view space-y-16">
       
       <!-- HERO BANNER (Directly matching media image) -->
-      <section class="relative min-h-[85vh] flex flex-col justify-center items-center text-center px-4 sm:px-6 lg:px-8 media-hero-bg overflow-hidden pt-12 pb-16">
+      <section id="heroSection" class="relative min-h-[86vh] flex flex-col justify-center items-center text-center px-4 sm:px-6 lg:px-8 media-hero-bg overflow-hidden pt-12 pb-16">
         
-        <!-- Top Pill -->
-        <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-white/20 border border-white/40 text-xs font-mono text-white mb-6 shadow-lg backdrop-blur-md">
-          <i class="fa-solid fa-bolt text-cyan-300"></i>
-          <span>Autonomous AI Agentic Commerce • Razorpay DataSync Ready</span>
+        <!-- Interactive 3D AI Robot Agent Canvas (Positioned Behind Heading) -->
+        <div class="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-hidden flex items-center justify-center">
+          <canvas id="heroRobotCanvas" class="w-full h-full opacity-90"></canvas>
+          <div class="absolute w-[480px] h-[480px] rounded-full bg-blue-400/25 blur-3xl pointer-events-none -z-10 animate-pulse"></div>
         </div>
 
-        <!-- Giant 'Outgrow Ordinary' Typography from Media -->
-        <h1 class="outgrow-text select-none">
-          Outgrow Ordinary
-        </h1>
+        <!-- Foreground Content Layer (Z-10) -->
+        <div class="relative z-10 flex flex-col items-center select-none max-w-5xl mx-auto">
+          <!-- Top Pill (Compact & Sleek) -->
+          <div class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-white/15 border border-white/30 text-[10px] sm:text-[11px] font-mono text-white/95 mb-2 shadow-sm backdrop-blur-sm">
+            <i class="fa-solid fa-bolt text-cyan-300 text-[10px]"></i>
+            <span>Autonomous AI Agentic Commerce • Razorpay DataSync Ready</span>
+          </div>
 
-        <p class="mt-4 text-base sm:text-xl text-blue-100 max-w-2xl mx-auto font-normal leading-relaxed">
-          Autonomous AI Commerce from discovery to sandbox checkout. Engineered for modern merchants and AI purchasing agents.
-        </p>
+          <!-- Giant 'Outgrow Ordinary' Typography from Media -->
+          <h1 class="outgrow-text select-none drop-shadow-2xl">
+            Outgrow Ordinary
+          </h1>
 
-        <!-- Centered Action Button from Media: White Pill with Dark Text -->
-        <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <button onclick="navigate('ai')" class="px-8 py-4 rounded-xl bg-white hover:bg-slate-100 text-blue-900 font-extrabold text-sm uppercase tracking-wider shadow-2xl hover:scale-105 transition-all">
-            SEE ALL DEMOS
-          </button>
-          <button onclick="navigate('live-agent')" class="px-6 py-4 rounded-xl bg-blue-800/60 hover:bg-blue-800 border border-white/30 text-white font-bold text-sm transition-all flex items-center space-x-2">
-            <i class="fa-solid fa-wand-magic-sparkles text-cyan-300"></i><span>Live WOW Visualizer</span>
-          </button>
-          <button onclick="navigate('dashboard')" class="px-6 py-4 rounded-xl bg-white/10 hover:bg-white/20 border border-white/30 text-white font-bold text-sm transition-all flex items-center space-x-2">
-            <i class="fa-solid fa-chart-line text-cyan-300"></i><span>Merchant Growth Hub</span>
-          </button>
+          <p class="mt-4 text-base sm:text-xl text-blue-100 max-w-2xl mx-auto font-normal leading-relaxed drop-shadow-md">
+            Autonomous AI Commerce from discovery to sandbox checkout. Engineered for modern merchants and AI purchasing agents.
+          </p>
+
+          <!-- Centered Action Button from Media: White Pill with Dark Text -->
+          <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <button onclick="navigate('ai')" class="px-8 py-4 rounded-xl bg-white hover:bg-slate-100 text-blue-900 font-extrabold text-sm uppercase tracking-wider shadow-2xl hover:scale-105 transition-all">
+              SEE ALL DEMOS
+            </button>
+            <button onclick="navigate('live-agent')" class="px-6 py-4 rounded-xl bg-blue-800/60 hover:bg-blue-800 border border-white/30 text-white font-bold text-sm transition-all flex items-center space-x-2">
+              <i class="fa-solid fa-wand-magic-sparkles text-cyan-300"></i><span>Live WOW Visualizer</span>
+            </button>
+            <button onclick="navigate('dashboard')" class="px-6 py-4 rounded-xl bg-white/10 hover:bg-white/20 border border-white/30 text-white font-bold text-sm transition-all flex items-center space-x-2">
+              <i class="fa-solid fa-chart-line text-cyan-300"></i><span>Merchant Growth Hub</span>
+            </button>
+          </div>
         </div>
 
         <!-- Bottom-Right 'Hiring AI Builders' Card from Media -->
-        <div class="absolute bottom-6 right-6 hidden md:flex items-center space-x-4 p-4 rounded-2xl bg-white text-slate-900 shadow-2xl border border-slate-200 hover:scale-105 transition-transform cursor-pointer" onclick="navigate('ai')">
+        <div class="absolute bottom-6 right-6 hidden md:flex items-center space-x-4 p-4 rounded-2xl bg-white text-slate-900 shadow-2xl border border-slate-200 hover:scale-105 transition-transform cursor-pointer z-20" onclick="navigate('ai')">
           <div class="text-left">
             <span class="block text-xs font-bold text-slate-600">Hiring</span>
             <span class="block text-sm font-black text-slate-900">AI Builders</span>
@@ -2232,6 +2243,373 @@ POST /api/agent/chat
       } catch (e) {}
     }
 
+    /* =========================================================================
+       6. 3D INTERACTIVE AI ROBOT AGENT HERO ENGINE (THREE.JS)
+       ========================================================================= */
+    let heroRobotAnimId = null;
+    function initHeroRobot3D() {
+      const canvas = document.getElementById('heroRobotCanvas');
+      if (!canvas || !window.THREE) return;
+
+      const heroSec = document.getElementById('heroSection') || canvas.parentElement;
+      let width = canvas.clientWidth || window.innerWidth;
+      let height = canvas.clientHeight || 650;
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(38, width / height, 0.1, 100);
+      camera.position.set(0, 0.15, 8.8);
+
+      const renderer = new THREE.WebGLRenderer({
+        canvas: canvas,
+        alpha: true,
+        antialias: true,
+        powerPreference: 'high-performance'
+      });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      renderer.setSize(width, height);
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 1.25;
+
+      // Lights
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.9);
+      scene.add(ambientLight);
+
+      const dirLight = new THREE.DirectionalLight(0xa5c9ff, 2.0);
+      dirLight.position.set(4, 6, 6);
+      scene.add(dirLight);
+
+      const backRimLight = new THREE.PointLight(0x0066ff, 3.5, 25);
+      backRimLight.position.set(-5, 4, -4);
+      scene.add(backRimLight);
+
+      const cyanFillLight = new THREE.PointLight(0x00d2b4, 2.4, 20);
+      cyanFillLight.position.set(5, -2, 4);
+      scene.add(cyanFillLight);
+
+      // Materials
+      const whiteArmorMat = new THREE.MeshStandardMaterial({
+        color: 0xffffff,
+        roughness: 0.18,
+        metalness: 0.15
+      });
+
+      const darkObsidianMat = new THREE.MeshStandardMaterial({
+        color: 0x050b18,
+        roughness: 0.1,
+        metalness: 0.85
+      });
+
+      const cyanLedMat = new THREE.MeshBasicMaterial({
+        color: 0x00d2b4
+      });
+
+      const electricBlueMat = new THREE.MeshStandardMaterial({
+        color: 0x0066ff,
+        roughness: 0.25,
+        metalness: 0.75
+      });
+
+      const coreGlowMat = new THREE.MeshStandardMaterial({
+        color: 0x38bdf8,
+        emissive: 0x0088ff,
+        emissiveIntensity: 2.2,
+        roughness: 0.2
+      });
+
+      const hologramMat = new THREE.MeshBasicMaterial({
+        color: 0x38bdf8,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.45
+      });
+
+      const hologramSolidMat = new THREE.MeshStandardMaterial({
+        color: 0x0066ff,
+        emissive: 0x00d2b4,
+        emissiveIntensity: 0.6,
+        transparent: true,
+        opacity: 0.35,
+        roughness: 0.1
+      });
+
+      // Robot Root Container
+      const robotRoot = new THREE.Group();
+      scene.add(robotRoot);
+      robotRoot.position.set(0, 0.15, 0);
+
+      const isMobile = window.innerWidth < 768;
+      if (isMobile) {
+        robotRoot.scale.set(0.92, 0.92, 0.92);
+      } else {
+        robotRoot.scale.set(1.30, 1.30, 1.30);
+      }
+
+      // Torso Assembly
+      const torsoGroup = new THREE.Group();
+      robotRoot.add(torsoGroup);
+
+      const chestGeo = new THREE.CylinderGeometry(0.75, 0.52, 1.25, 32);
+      const chestMesh = new THREE.Mesh(chestGeo, whiteArmorMat);
+      chestMesh.position.y = -0.1;
+      torsoGroup.add(chestMesh);
+
+      // Arc Core Housing & Glowing Reactor
+      const coreTorusGeo = new THREE.TorusGeometry(0.24, 0.05, 16, 32);
+      const coreTorus = new THREE.Mesh(coreTorusGeo, electricBlueMat);
+      coreTorus.position.set(0, -0.05, 0.66);
+      torsoGroup.add(coreTorus);
+
+      const coreSphereGeo = new THREE.SphereGeometry(0.16, 24, 24);
+      const coreSphere = new THREE.Mesh(coreSphereGeo, coreGlowMat);
+      coreSphere.position.set(0, -0.05, 0.64);
+      torsoGroup.add(coreSphere);
+
+      // Pauldrons & Shoulder Armor
+      [-1, 1].forEach((side) => {
+        const shoulderGeo = new THREE.SphereGeometry(0.35, 24, 24);
+        const shoulderMesh = new THREE.Mesh(shoulderGeo, whiteArmorMat);
+        shoulderMesh.position.set(side * 0.95, 0.35, 0.05);
+        torsoGroup.add(shoulderMesh);
+
+        const trimGeo = new THREE.TorusGeometry(0.25, 0.04, 12, 24);
+        const trimMesh = new THREE.Mesh(trimGeo, electricBlueMat);
+        trimMesh.position.set(side * 0.95, 0.35, 0.05);
+        trimMesh.rotation.y = Math.PI / 2;
+        torsoGroup.add(trimMesh);
+
+        // Forearm / Floating Hand Pod
+        const armGeo = new THREE.CylinderGeometry(0.18, 0.14, 0.72, 16);
+        const armMesh = new THREE.Mesh(armGeo, whiteArmorMat);
+        armMesh.position.set(side * 1.15, -0.35, 0.2);
+        armMesh.rotation.z = side * -0.25;
+        torsoGroup.add(armMesh);
+      });
+
+      // Head Assembly
+      const headGroup = new THREE.Group();
+      headGroup.position.set(0, 1.1, 0.05);
+      robotRoot.add(headGroup);
+
+      const helmetGeo = new THREE.SphereGeometry(0.68, 32, 32);
+      const helmetMesh = new THREE.Mesh(helmetGeo, whiteArmorMat);
+      helmetMesh.scale.set(1.0, 1.12, 0.96);
+      headGroup.add(helmetMesh);
+
+      // Curved Obsidian Visor
+      const visorGeo = new THREE.SphereGeometry(0.56, 32, 16, 0, Math.PI, 0, Math.PI * 0.52);
+      const visorMesh = new THREE.Mesh(visorGeo, darkObsidianMat);
+      visorMesh.rotation.x = -Math.PI / 2;
+      visorMesh.position.set(0, -0.02, 0.26);
+      headGroup.add(visorMesh);
+
+      // Visor Glowing LED Eyes (Twin Pill Eyes)
+      [-0.18, 0.18].forEach(x => {
+        const eyeGeo = new THREE.BoxGeometry(0.20, 0.06, 0.06);
+        const eyeMesh = new THREE.Mesh(eyeGeo, cyanLedMat);
+        eyeMesh.position.set(x, 0.02, 0.64);
+        headGroup.add(eyeMesh);
+      });
+
+      // Ear Pods & Antennas
+      [-1, 1].forEach(side => {
+        const earGeo = new THREE.CylinderGeometry(0.22, 0.22, 0.12, 24);
+        const earMesh = new THREE.Mesh(earGeo, electricBlueMat);
+        earMesh.position.set(side * 0.72, 0, 0);
+        earMesh.rotation.z = Math.PI / 2;
+        headGroup.add(earMesh);
+
+        const earRingGeo = new THREE.TorusGeometry(0.24, 0.03, 12, 24);
+        const earRing = new THREE.Mesh(earRingGeo, cyanLedMat);
+        earRing.position.set(side * 0.76, 0, 0);
+        earRing.rotation.y = Math.PI / 2;
+        headGroup.add(earRing);
+      });
+
+      // Anti-Gravity Concentric Energy Rings (Base)
+      const energyRingsGroup = new THREE.Group();
+      energyRingsGroup.position.set(0, -0.95, 0);
+      robotRoot.add(energyRingsGroup);
+
+      const ring1Geo = new THREE.TorusGeometry(1.35, 0.025, 16, 64);
+      const ring1 = new THREE.Mesh(ring1Geo, cyanLedMat);
+      ring1.rotation.x = Math.PI / 2;
+      energyRingsGroup.add(ring1);
+
+      const ring2Geo = new THREE.TorusGeometry(1.75, 0.02, 16, 64);
+      const ring2 = new THREE.Mesh(ring2Geo, electricBlueMat);
+      ring2.rotation.x = Math.PI / 2;
+      ring2.rotation.y = 0.15;
+      energyRingsGroup.add(ring2);
+
+      const ring3Geo = new THREE.TorusGeometry(2.15, 0.015, 16, 64);
+      const ring3 = new THREE.Mesh(ring3Geo, cyanLedMat);
+      ring3.rotation.x = Math.PI / 2;
+      ring3.rotation.y = -0.15;
+      energyRingsGroup.add(ring3);
+
+      // Orbiting Commerce Holograms (5 distinct nodes)
+      const hologramsGroup = new THREE.Group();
+      scene.add(hologramsGroup);
+
+      const holoNodes = [];
+
+      // 1. Shopping Cart Node
+      const cartGeo = new THREE.OctahedronGeometry(0.32, 0);
+      const cartMesh = new THREE.Mesh(cartGeo, hologramMat);
+      const cartCore = new THREE.Mesh(new THREE.SphereGeometry(0.12, 16, 16), cyanLedMat);
+      const cartGroup = new THREE.Group();
+      cartGroup.add(cartMesh); cartGroup.add(cartCore);
+      hologramsGroup.add(cartGroup);
+      holoNodes.push({ group: cartGroup, speed: 0.35, radiusX: 3.6, radiusZ: 2.1, phase: 0, bobSpeed: 2.2 });
+
+      // 2. Verified Product Box Node
+      const boxGeo = new THREE.BoxGeometry(0.42, 0.42, 0.42);
+      const boxMesh = new THREE.Mesh(boxGeo, hologramSolidMat);
+      const boxWire = new THREE.Mesh(boxGeo, hologramMat);
+      const boxGroup = new THREE.Group();
+      boxGroup.add(boxMesh); boxGroup.add(boxWire);
+      hologramsGroup.add(boxGroup);
+      holoNodes.push({ group: boxGroup, speed: 0.28, radiusX: 4.1, radiusZ: 2.4, phase: 1.25, bobSpeed: 1.8 });
+
+      // 3. Growth Analytics Wave Node
+      const analyticsGroup = new THREE.Group();
+      [-0.14, 0, 0.14].forEach((x, idx) => {
+        const barMesh = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.25 + idx * 0.15, 12), cyanLedMat);
+        barMesh.position.set(x, (0.25 + idx * 0.15) / 2, 0);
+        analyticsGroup.add(barMesh);
+      });
+      hologramsGroup.add(analyticsGroup);
+      holoNodes.push({ group: analyticsGroup, speed: 0.32, radiusX: 3.7, radiusZ: 2.2, phase: 2.5, bobSpeed: 2.0 });
+
+      // 4. Razorpay Payment Token Node
+      const tokenGeo = new THREE.CylinderGeometry(0.28, 0.28, 0.06, 24);
+      const tokenMesh = new THREE.Mesh(tokenGeo, electricBlueMat);
+      tokenMesh.rotation.x = Math.PI / 4;
+      const tokenRing = new THREE.Mesh(new THREE.TorusGeometry(0.32, 0.02, 12, 32), cyanLedMat);
+      tokenRing.rotation.x = Math.PI / 4;
+      const tokenGroup = new THREE.Group();
+      tokenGroup.add(tokenMesh); tokenGroup.add(tokenRing);
+      hologramsGroup.add(tokenGroup);
+      holoNodes.push({ group: tokenGroup, speed: 0.30, radiusX: 4.3, radiusZ: 2.5, phase: 3.8, bobSpeed: 1.6 });
+
+      // 5. DataSync AI Neural Node
+      const neuralGeo = new THREE.IcosahedronGeometry(0.34, 0);
+      const neuralMesh = new THREE.Mesh(neuralGeo, hologramMat);
+      const neuralCore = new THREE.Mesh(new THREE.SphereGeometry(0.12, 16, 16), coreGlowMat);
+      const neuralGroup = new THREE.Group();
+      neuralGroup.add(neuralMesh); neuralGroup.add(neuralCore);
+      hologramsGroup.add(neuralGroup);
+      holoNodes.push({ group: neuralGroup, speed: 0.26, radiusX: 3.8, radiusZ: 2.0, phase: 5.0, bobSpeed: 2.4 });
+
+      // Holographic Micro-Particles Nebula
+      const particleCount = isMobile ? 35 : 75;
+      const particleGeo = new THREE.BufferGeometry();
+      const positions = new Float32Array(particleCount * 3);
+      for (let i = 0; i < particleCount * 3; i += 3) {
+        positions[i] = (Math.random() - 0.5) * 8.5;
+        positions[i + 1] = (Math.random() - 0.5) * 4.5 + 0.2;
+        positions[i + 2] = (Math.random() - 0.5) * 4.0;
+      }
+      particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      const particleMat = new THREE.PointsMaterial({
+        color: 0x70b4ff,
+        size: 0.065,
+        transparent: true,
+        opacity: 0.75,
+        blending: THREE.AdditiveBlending
+      });
+      const particleSystem = new THREE.Points(particleGeo, particleMat);
+      scene.add(particleSystem);
+
+      // Mouse Parallax Coordinates
+      let mouseX = 0, mouseY = 0;
+      let targetMouseX = 0, targetMouseY = 0;
+
+      if (!isMobile) {
+        window.addEventListener('mousemove', (e) => {
+          const rect = heroSec.getBoundingClientRect();
+          if (e.clientY >= rect.top && e.clientY <= rect.bottom) {
+            targetMouseX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+            targetMouseY = ((e.clientY - rect.top) / rect.height) * 2 - 1;
+          }
+        });
+      }
+
+      // Responsive Resize
+      window.addEventListener('resize', () => {
+        if (!canvas || !canvas.parentElement) return;
+        width = canvas.parentElement.clientWidth || window.innerWidth;
+        height = canvas.parentElement.clientHeight || 650;
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+        renderer.setSize(width, height);
+      });
+
+      // Animation Loop with Visibility Observer
+      let t = 0;
+      let isVisible = true;
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => { isVisible = entry.isIntersecting; });
+      }, { threshold: 0.1 });
+      observer.observe(heroSec);
+
+      function animate() {
+        heroRobotAnimId = requestAnimationFrame(animate);
+        if (!isVisible) return;
+
+        t += 0.018;
+
+        // Smooth Mouse Parallax Interpolation
+        mouseX += (targetMouseX - mouseX) * 0.05;
+        mouseY += (targetMouseY - mouseY) * 0.05;
+
+        // Floating Bobbing Dynamics (Elevated so eyes are 100% visible)
+        robotRoot.position.y = 0.46 + Math.sin(t * 1.5) * 0.10;
+        robotRoot.rotation.y = Math.sin(t * 0.5) * 0.08 + mouseX * 0.32;
+        robotRoot.rotation.x = Math.sin(t * 0.8) * 0.04 - mouseY * 0.18;
+        robotRoot.rotation.z = Math.sin(t * 0.6) * 0.03 + mouseX * -0.06;
+
+        // Subtle Head Glance Dynamics
+        headGroup.rotation.y = Math.sin(t * 0.9) * 0.14 + mouseX * 0.22;
+        headGroup.rotation.x = Math.sin(t * 1.2) * 0.06 - mouseY * 0.14;
+
+        // Glowing Core Pulsation
+        const pulse = 1.8 + Math.sin(t * 3.5) * 0.6;
+        coreGlowMat.emissiveIntensity = pulse;
+
+        // Energy Rings Counter-Rotation
+        ring1.rotation.z += 0.020;
+        ring2.rotation.z -= 0.015;
+        ring3.rotation.z += 0.012;
+
+        // Orbiting Commerce Holograms
+        holoNodes.forEach((node, idx) => {
+          const angle = t * node.speed + node.phase;
+          const hX = Math.cos(angle) * node.radiusX + mouseX * 0.4;
+          const hZ = Math.sin(angle) * node.radiusZ;
+          const hY = Math.sin(t * node.bobSpeed + idx) * 0.18 + Math.sin(angle) * 0.25 - 0.1;
+
+          node.group.position.set(hX, hY, hZ);
+          node.group.rotation.x += 0.012;
+          node.group.rotation.y += 0.018;
+          node.group.rotation.z += 0.008;
+
+          // Depth-based scale fade
+          const scaleFactor = 0.85 + (hZ / node.radiusZ) * 0.25;
+          node.group.scale.set(scaleFactor, scaleFactor, scaleFactor);
+        });
+
+        // Particle System Slow Drift
+        particleSystem.rotation.y = t * 0.04 + mouseX * 0.15;
+        particleSystem.rotation.x = Math.sin(t * 0.02) * 0.05 - mouseY * 0.10;
+
+        renderer.render(scene, camera);
+      }
+
+      animate();
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
       fetchProductsHttp();
       fetchDataSyncHttp();
@@ -2239,6 +2617,7 @@ POST /api/agent/chat
       recalculateCart();
       renderAuditLogs();
       initHeroCanvas();
+      initHeroRobot3D();
       init3DRevenueCanvas();
       initLiveFlowGraph();
 
